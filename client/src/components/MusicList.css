@@ -1,0 +1,95 @@
+.musicListContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.musicListContainer h3 {
+  padding: 0px;
+  font-size: 20px;
+  color: #fff;
+  margin: 13px 0px 13px 0px;
+}
+
+.musicListItem {
+  width: 230px;
+  height: 65px;
+  background-color: #2a2e36;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 0px 10px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.musicListItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 12px #ffffff20;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.musicListAlbumCover {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 4px;
+}
+
+.musicListText {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.musicListText h4,
+.musicListText p {
+  margin: 0px;
+  padding: 0px;
+}
+
+.musicListText h4 {
+  font-size: 14px;
+}
+
+.musicListText p {
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+.musicListListenCounts {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.listenCountIcon {
+  width: 20px;
+  aspect-ratio: 1;
+}
+
+.musicListSeeMore {
+  width: 105px;
+  height: 30px;
+  background-color: #2d2a7a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  margin: 5px 0px 0px 0px;
+}
+
+.musicListSeeMore:hover {
+  background-color: #2d2a7a;
+  opacity: 0.8;
+  cursor: pointer;
+}

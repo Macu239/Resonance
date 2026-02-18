@@ -1,0 +1,95 @@
+.postContainer {
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #ffffff80;
+  padding: 15px 15px 10px 15px;
+  color: #fff;
+}
+
+.postProfilePic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.postRight {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-left: 10px;
+}
+
+.postHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.postUserName {
+  font-size: 16px;
+  margin: 0px;
+}
+
+.postTimeStamp {
+  font-size: 12px;
+  color: #ffffffa8;
+  margin: 0px;
+}
+
+.postContent {
+  font-size: 16px;
+  height: auto;
+  line-height: auto;
+}
+
+.postReactions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px 0px 0px 0px;
+}
+
+.postReaction {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  padding: 4px;
+}
+
+.postReactionCount {
+  font-size: 14px;
+  margin: 0px;
+}
+
+.postReactionIcon {
+  width: 20px;
+  aspect-ratio: 1;
+}
+
+.postReaction:hover {
+  background-color: #ffffff20;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#postLike {
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+#postLike:active {
+  transform: scale(1.2);
+}
+
+.postMoreOptions {
+  width: 25px;
+  height: 8px;
+  margin: 0px 0px 0px auto;
+}

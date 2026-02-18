@@ -1,0 +1,46 @@
+.menuCoontainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #fff;
+}
+
+.menuList{
+    width: 100%;
+    padding: 0px 0px 0px 13.5px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.menuList:hover{
+    border-radius: 8px;
+    background-color: #2a2c33;
+    cursor: pointer;
+}
+
+.menuIcon{
+    width: 20px;
+    height: 20px;
+    padding-left: 5px;
+}
+
+#menuProfilePic{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.menuList:has(#menuProfilePic){
+    padding-left: 5px;
+}
+
+.menuList p{
+    font-size: 16px;
+    margin-left: 18px;
+}
+

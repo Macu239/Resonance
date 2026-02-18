@@ -1,0 +1,65 @@
+.ArtistsGridContatiner{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ArtistsGridContatiner h3{
+    color: #fff;
+    font-size: 20px;
+    margin:10px 0px 15px 0px;
+    
+}
+
+.ArtistsProfiles{
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(60px, 1fr));
+    gap: 15px;
+
+}
+
+.ArtistProfile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.ArtistProfile:hover {
+    transform: translateY(-5px);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.ArtistProfilePicture{
+    width: 56px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+.ArtistProfile p{
+    font-size: 12px;
+    margin: 3px 0px 2px 0px;
+}
+
+.ArtistsSeeMore {
+  width: 105px;
+  height: 30px;
+  background-color: #2d2a7a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  margin: 5px 0px 0px 0px;
+}
+
+.ArtistsSeeMore:hover {
+  background-color: #2d2a7a;
+  opacity: 0.8;
+  cursor: pointer;
+}
