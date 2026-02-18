@@ -1,95 +1,75 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import {
+  MusicPlayer,
+  Menu,
+  Messages,
+  MusicList,
+  ArtistsGrid,
+  AddPost,
+  Post,
+  PostData,
+} from "../components";
 import styles from "./page.module.css";
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+  const [searchBar, setsearchBar] = useState({
+    Content: "",
+  });
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setsearchBar((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  return (
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <input
+          type="text"
+          name="Content"
+          placeholder="What do you want to play?"
+          className={styles.searchBar}
+          value={searchBar.Content}
+          onChange={handleChange}
         />
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className={styles.contents}>
+        <div className={styles.leftMenu}>
+          <div className={`${styles.musicPlayer} ${styles.subBlocks}`}>
+            <MusicPlayer />
+          </div>
+          <div className={`${styles.menu} ${styles.subBlocks}`}>
+            <Menu />
+          </div>
+        </div>
+        <div className={styles.postArea}>
+          <div className={`${styles.addPost} ${styles.subBlocks}`}>
+            <AddPost />
+          </div>
+          <div className={`${styles.posts} ${styles.subBlocks}`}>
+            {PostData.map((post) => (
+              <Post key={post.userName} PostData={post} />
+            ))}
+          </div>
+        </div>
+        <div className={styles.rightMenu}>
+          <div className={`${styles.MusicList} ${styles.subBlocks}`}>
+            <MusicList />
+          </div>
+          <div className={`${styles.artisits} ${styles.subBlocks}`}>
+            <ArtistsGrid />
+          </div>
+          <div className={`${styles.MusicList} ${styles.subBlocks}`}>
+            <MusicList />
+          </div>
+        </div>
       </div>
-    </main>
+      <div className={`${styles.messagesWindow} ${styles.subBlocks}`}>
+        <Messages />
+      </div>
+    </div>
   );
 }
