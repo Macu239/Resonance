@@ -37,3 +37,78 @@
   margin-left: auto;
   margin-right: 15px;
 }
+
+.messagesPanel {
+  position: fixed;
+  right: 40px;
+  width: 300px;
+  height: 60vh;
+  background-color: #1e1f25;
+  border-radius: 15px;
+  z-index: 1000;
+  display: none;
+  
+}
+
+.messagesPanel.open {
+  bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.messagesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  border-bottom: 1px solid #2a2d33;
+}
+
+.messagesHeader span {
+  cursor: pointer;
+}
+
+.messagesContentBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px 0 20px;
+  overflow-y: auto;
+  flex: 1;
+  height: 16%;
+}
+
+.messagesContentBlock:hover {
+  background-color: #2a2d33;
+  border-radius: 10px;
+}
+
+.messageUserIcon{
+  height: 50px;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  margin: 5px 15px 5px 0;
+}
+
+.messageContent{
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+}
+
+.messageUserName{
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.messageMessage{
+  font-size: 14px;
+  color: #c0c0c0;
+}
