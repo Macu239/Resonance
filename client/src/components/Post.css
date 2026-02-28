@@ -75,17 +75,19 @@
 
 .postReaction:hover {
   background-color: #ffffff20;
-  border-radius: 10px;
+  border-radius: 15px;
   cursor: pointer;
 }
 
 #postLike {
+  
   transition: transform 0.2s ease;
   cursor: pointer;
 }
 
 #postLike:active {
-  transform: scale(1.2);
+
+  transform: scale(0.8);
 }
 
 .postMoreOptions {

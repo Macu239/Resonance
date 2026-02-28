@@ -45,12 +45,19 @@ export default function Post({ PostData }) {
             />
             <p className="postReactionCount">({PostData.reposts})</p>
           </div>
-          <div className="postReaction" onClick={() => toggleLike()}>
+          <div
+            className="postReaction"
+            id="postLike"
+            onClick={() => toggleLike()}
+          >
             <img
-              src={isLiked ? "./imgs/homePage/heart (2).svg" : "./imgs/homePage/heart.svg"}
+              src={
+                isLiked
+                  ? "./imgs/homePage/heart (2).svg"
+                  : "./imgs/homePage/heart.svg"
+              }
               alt="like"
               className="postReactionIcon"
-              id="postLike"
             />
             <p className="postReactionCount">({PostData.likes})</p>
           </div>
@@ -58,12 +65,20 @@ export default function Post({ PostData }) {
             className="postReaction"
             onClick={() => console.log("share clicked")}
           >
-            <img src="./imgs/homePage/share.svg" alt="share" className="postReactionIcon" />
+            <img
+              src="./imgs/homePage/share.svg"
+              alt="share"
+              className="postReactionIcon"
+            />
             <p className="postReactionCount">({PostData.shares})</p>
           </div>
         </div>
       </div>
-      <img src="./imgs/homePage/menu-dots.svg" alt="More" className="postMoreOptions" />
+      <img
+        src="./imgs/homePage/menu-dots.svg"
+        alt="More"
+        className="postMoreOptions"
+      />
     </div>
   );
 }
