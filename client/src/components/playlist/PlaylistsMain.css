@@ -1,0 +1,53 @@
+.grid-main-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.grid-main {
+    width: min(100vw, calc(100vh * (16 / 9)));
+    height: min(100vh, calc(100vw * (9 / 16)));
+    background-color: rgb(102, 102, 105);
+
+    font-size: 10px;
+    gap: 4px;
+    padding: 2rem; 
+    display: grid;
+    grid-template-columns: 7.5fr 25fr 67.5fr;
+    grid-template-rows: 87.5fr 12.5fr;
+    grid-template-areas:
+        "widgets playlists rec"
+        "widgets currsong currsong";
+}
+
+.widgets-container {
+    background-color: rgb(75, 20, 20);
+    color: lightblue;
+
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    padding: .5rem; 
+
+    grid-area: widgets;
+}
+
+.playlists-container {
+    background-color: hsl(240, 94%, 13%);
+    color: lightgreen;
+    grid-area: playlists;
+}
+
+.rec-container {
+    background-color: hsl(261, 65%, 15%);
+    color: antiquewhite;
+    grid-area: rec;
+}
+
+.currsong-container {
+    background-color: hsl(49, 74%, 10%);
+    color: darkgrey;
+    grid-area: currsong;
+}
