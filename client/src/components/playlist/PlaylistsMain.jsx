@@ -31,13 +31,22 @@ export default function PlaylistsMain() {
       <div className="grid-main-wrapper">
         <div className="grid-main">
           <div className="widgets-container">
-            <div className="widgets-item">
+            <div className="widgets-item-home">
               <img
                 className="home-btn"
-                src="https://drive.google.com/file/d/1v0UPmbxbrItAul5217hhvEUE1TvYzOPr/view?usp=sharing"
+                src="https://drive.google.com/uc?export=download&id=17cuLkkcIqLAbKk7sEKBg6egzZUZuFdxO"
                 alt="home" />
-              <img className="search-btn" src="" alt="search" />
+            </div>
+            <div className="widgets-item-search">
+              <img
+                className="search-btn"
+                src="https://drive.google.com/file/d/17cuLkkcIqLAbKk7sEKBg6egzZUZuFdxO/view?usp=drive_link"
+                alt="search" />
+            </div>
+            <div className="widgets-item-msgs">
               <img className="msgs-btn" src="" alt="msgs" />
+            </div>
+            <div className="widgets-item-add">
               <img className="add-btn" src="" alt="add" />
             </div>
           </div>

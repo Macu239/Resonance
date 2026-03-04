@@ -9,7 +9,7 @@ import {
   AddPost,
   Post,
   PostData,
-} from "../components";
+} from "../components/HomePage";
 import styles from "./page.module.css";
 
 export default function Home() {
