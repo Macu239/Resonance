@@ -31,6 +31,9 @@ export default function PlaylistsMain() {
         <div className="grid-main">
           <div className="widgets-container">
             Widgets 1
+            <div className="widgets-item">
+
+            </div>
           </div>
           <div className="playlists-container">
             Playlists
