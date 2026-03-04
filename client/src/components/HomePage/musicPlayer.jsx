@@ -12,7 +12,7 @@ export default function MusicPlayer() {
   return (
     <div className="musicPlayerContainer">
       <img
-        src="https://f4.bcbits.com/img/a2004386472_16.jpg"
+        src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/Joji_-_Piss_in_the_Wind.jpg/250px-Joji_-_Piss_in_the_Wind.jpg"
         alt="Album Cover"
         className="musicPlayeralbumCover"
       />

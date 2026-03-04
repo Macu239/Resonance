@@ -2,9 +2,15 @@ import { useState } from "react";
 import "./AddPost.css";
 
 export default function AddPost() {
-  const [postDraftData, setpostDraftData] = useState({
+  const [postDraftData, setPostDraftData] = useState({
     Content: "",
-    Attached: "",
+    attachments: {
+      image: null,
+      playlist: null,
+      album: null,
+      music: null,
+      artist: null,
+    },
   });
 
   const handleChange = (e) => {
@@ -37,7 +43,11 @@ export default function AddPost() {
               className="addPostIconsWrapper"
               onClick={() => console.log("Add picture")}
             >
-              <img src="./imgs/homePage/picture.svg" alt="picture" className="addPostIcon" />
+              <img
+                src="./imgs/homePage/picture.svg"
+                alt="picture"
+                className="addPostIcon"
+              />
             </div>
 
             <div
@@ -77,7 +87,11 @@ export default function AddPost() {
               className="addPostIconsWrapper"
               onClick={() => console.log("Add artist")}
             >
-              <img src="./imgs/homePage/artist.svg" alt="Artists" className="addPostIcon" />
+              <img
+                src="./imgs/homePage/artist.svg"
+                alt="Artists"
+                className="addPostIcon"
+              />
             </div>
           </div>
           <button
