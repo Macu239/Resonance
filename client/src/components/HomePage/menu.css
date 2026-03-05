@@ -1,10 +1,14 @@
-.menuCoontainer{
+.menuContainer{
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     color: #fff;
+}
+
+.menuContainer a{
+    width: 100%;
 }
 
 .menuList{
@@ -23,10 +27,9 @@
     cursor: pointer;
 }
 
-.menuIcon{
+.mainPageMenuIcon{
     width: 20px;
     height: 20px;
-    padding-left: 5px;
 }
 
 #menuProfilePic{
