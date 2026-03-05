@@ -5,7 +5,7 @@ export default function PlaylistsMain() {
   /*
   -List of Components
       -Widget Selections
-          -Add...
+          -Add (pages, other general selections?)
           -Home Page Router
           -Search Playlist (sep page?)
           -Messages Page Router (or integrated)
@@ -31,24 +31,44 @@ export default function PlaylistsMain() {
       <div className="grid-main-wrapper">
         <div className="grid-main">
           <div className="widgets-container">
-            <div className="widgets-item-home">
-              <img
-                className="home-btn"
-                src="https://drive.google.com/uc?export=download&id=17cuLkkcIqLAbKk7sEKBg6egzZUZuFdxO"
-                alt="home" />
-            </div>
-            <div className="widgets-item-search">
-              <img
-                className="search-btn"
-                src="https://drive.google.com/file/d/17cuLkkcIqLAbKk7sEKBg6egzZUZuFdxO/view?usp=drive_link"
-                alt="search" />
-            </div>
-            <div className="widgets-item-msgs">
-              <img className="msgs-btn" src="" alt="msgs" />
-            </div>
-            <div className="widgets-item-add">
-              <img className="add-btn" src="" alt="add" />
-            </div>
+            <ul className="navbar">
+              <li>
+                <div className="item" id="widgets_homebtn">
+                  <a id="widgets_item_homebtn" href="/">
+                    <img
+                      src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662689/house-solid-full-nobg_knaeep.png"
+                      alt="home" />
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div className="item" id="widgets_msgsbtn">
+                  <a id="widgets_item_msgsbtn" href="/messages">
+                    <img
+                      src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772667370/paper-plane-solid-full-nobg_v3gow3.png"
+                      alt="msgs" />
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div className="item" id="widgets_searchbtn">
+                  <a id="widgets_item_searchbtn" href="/">
+                    <img
+                      src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
+                      alt="search" />
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div className="item" id="widgets_optbtn">
+                  <a id="widgets_item_optbtn" href="">
+                    <img
+                      src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772680934/bars-solid_ut921k.png"
+                      alt="options" />
+                  </a>
+                </div>
+              </li>
+            </ul>
           </div>
           <div className="playlists-container">
             Playlists
