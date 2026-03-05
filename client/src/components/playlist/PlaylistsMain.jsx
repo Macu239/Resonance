@@ -1,4 +1,5 @@
 import "./PlaylistsMain.css";
+import Widgets from "./Widgets.jsx"
 
 
 export default function PlaylistsMain() {
@@ -27,60 +28,49 @@ export default function PlaylistsMain() {
   */
 
   return (
-    <>
-      <div className="grid-main-wrapper">
-        <div className="grid-main">
-          <div className="widgets-container">
-            <ul className="navbar">
-              <li>
-                <div className="item" id="widgets_homebtn">
-                  <a id="widgets_item_homebtn" href="/">
-                    <img
-                      src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662689/house-solid-full-nobg_knaeep.png"
-                      alt="home" />
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div className="item" id="widgets_msgsbtn">
-                  <a id="widgets_item_msgsbtn" href="/messages">
-                    <img
-                      src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772667370/paper-plane-solid-full-nobg_v3gow3.png"
-                      alt="msgs" />
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div className="item" id="widgets_searchbtn">
-                  <a id="widgets_item_searchbtn" href="/">
-                    <img
-                      src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
-                      alt="search" />
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div className="item" id="widgets_optbtn">
-                  <a id="widgets_item_optbtn" href="">
-                    <img
-                      src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772680934/bars-solid_ut921k.png"
-                      alt="options" />
-                  </a>
-                </div>
-              </li>
-            </ul>
+
+
+    <div className="grid-main-wrapper">
+      <div className="grid-main">
+        <section className="widgets-container">
+          <Widgets />
+        </section>
+
+        <section className="playlists-container">
+          <div className="item">
+            <h3 className="title">
+              Playlists
+            </h3>
           </div>
-          <div className="playlists-container">
-            Playlists
+
+          <div className="item">
+            <button>
+              <img
+                src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772667370/plus-solid-nobg_oxsd4x.png"
+                alt="Add/Create Playlist" />
+            </button>
           </div>
-          <div className="rec-container">
-            Rec
+
+          <div className="item" id="playlists_searchbar">
+            <img
+              src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
+              alt="search" />
+
+            <input>
+
+            </input>
           </div>
-          <div className="currsong-container">
-            Curr Song
-          </div>
-        </div>
+        </section>
+
+        <section className="rec-container">
+          Rec
+        </section>
+
+        <section className="currsong-container">
+          Curr Song
+        </section>
+
       </div>
-    </>
+    </div>
   )
 }

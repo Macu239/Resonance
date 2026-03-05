@@ -1,6 +1,6 @@
 
 .grid-main-wrapper {
-    background-color: #1e1f25;
+    background-color: hsl(240, 6%, 7%);
 
     display: flex;
     align-items: center;
@@ -12,7 +12,6 @@
 .grid-main {
     width: min(100vw, calc(100vh * (16 / 9)));
     height: min(100vh, calc(100vw * (9 / 16)));
-    background-color: #1e1f25;
 
     font-size: 10px;
     gap: 1rem;
@@ -25,14 +24,13 @@
         "currsong currsong currsong";
 }
 
-.grid-main div {
+.grid-main > section {
+    background-color: #1e1f25;
     border-radius: 10px;
-    box-shadow: 5px 5px;
+    box-shadow: 8px 8px 10px black;
 }
 
 .widgets-container {
-    background-color: hsl(0, 0%, 11%);
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,42 +39,6 @@
     padding: .5rem;
 
     grid-area: widgets;
-}
-
-.navbar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  list-style: none;
-  gap: 1.5rem;
-}
-
-.item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.item a {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.item img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  filter: invert(1);
-}
-
-.item a:hover {
-  opacity: 0.7;
-}
-
-#widgets_homebtn {
-    margin-top: 1.5rem;
 }
 
 .playlists-container {
