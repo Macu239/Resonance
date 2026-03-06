@@ -1,4 +1,7 @@
+
 .grid-main-wrapper {
+    background-color: hsl(240, 6%, 7%);
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7,30 +10,33 @@
 }
 
 .grid-main {
-    width: min(100vw, calc(100vh * (16 / 9)));
-    height: min(100vh, calc(100vw * (9 / 16)));
-    background-color: rgb(102, 102, 105);
+    width: min(100vw, calc(100vh * (14 / 9)));
+    height: min(100vh, calc(100vw * (9 / 14)));
 
     font-size: 10px;
-    gap: 4px;
-    padding: 2rem; 
+    gap: 1rem;
+    padding: 3rem;
     display: grid;
-    grid-template-columns: 7.5fr 25fr 67.5fr;
-    grid-template-rows: 87.5fr 12.5fr;
+    grid-template-columns: auto 25fr 75fr;
+    grid-template-rows: 90fr 10fr;
     grid-template-areas:
         "widgets playlists rec"
         "currsong currsong currsong";
 }
 
-.widgets-container {
-    background-color: rgb(75, 20, 20);
-    color: lightblue;
+.grid-main > section {
+    background-color: #1e1f25;
+    border-radius: 10px;
+    box-shadow: 8px 8px 10px black;
+}
 
-    display: flex; 
+.widgets-container {
+    display: flex;
     flex-direction: column;
-    align-items: center; 
-    padding: 2rem; 
-    gap: .5rem;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+    padding: .5rem;
 
     grid-area: widgets;
 }
@@ -38,6 +44,12 @@
 .playlists-container {
     background-color: hsl(240, 94%, 13%);
     color: lightgreen;
+
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
+
     grid-area: playlists;
 }
 
