@@ -10,15 +10,15 @@
 }
 
 .grid-main {
-    width: min(100vw, calc(100vh * (16 / 9)));
-    height: min(100vh, calc(100vw * (9 / 16)));
+    width: min(100vw, calc(100vh * (14 / 9)));
+    height: min(100vh, calc(100vw * (9 / 14)));
 
     font-size: 10px;
     gap: 1rem;
     padding: 3rem;
     display: grid;
-    grid-template-columns: auto 32.5fr 67.5fr;
-    grid-template-rows: 87.5fr 12.5fr;
+    grid-template-columns: auto 25fr 75fr;
+    grid-template-rows: 90fr 10fr;
     grid-template-areas:
         "widgets playlists rec"
         "currsong currsong currsong";
@@ -45,8 +45,10 @@
     background-color: hsl(240, 94%, 13%);
     color: lightgreen;
 
-    display: grid;
-
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
 
     grid-area: playlists;
 }

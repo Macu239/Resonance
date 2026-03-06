@@ -1,5 +1,6 @@
 import "./PlaylistsMain.css";
 import Widgets from "./Widgets.jsx"
+import UserPlaylists from "./UserPlaylists.jsx"
 
 
 export default function PlaylistsMain() {
@@ -33,33 +34,11 @@ export default function PlaylistsMain() {
     <div className="grid-main-wrapper">
       <div className="grid-main">
         <section className="widgets-container">
-          <Widgets />
+          <Widgets/>
         </section>
 
         <section className="playlists-container">
-          <div className="item">
-            <h3 className="title">
-              Playlists
-            </h3>
-          </div>
-
-          <div className="item">
-            <button>
-              <img
-                src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772667370/plus-solid-nobg_oxsd4x.png"
-                alt="Add/Create Playlist" />
-            </button>
-          </div>
-
-          <div className="item" id="playlists_searchbar">
-            <img
-              src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
-              alt="search" />
-
-            <input>
-
-            </input>
-          </div>
+          <UserPlaylists/>
         </section>
 
         <section className="rec-container">
