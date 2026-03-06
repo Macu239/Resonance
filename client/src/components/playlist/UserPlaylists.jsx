@@ -16,18 +16,19 @@ export default function UserPlaylists() {
 
       <section className="searchbar" id="userlists_searchbar">
         <div>
-          <img 
+          <img
             src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
             alt="search" />
-
-          <input>
-
+          <input placeholder="Search...">
+            {/* think about function for backend here */}
           </input>
         </div>
       </section>
 
       <section className="item" id="userlists_playlists">
-
+        <div>
+            
+        </div>
       </section>
     </>
   )
