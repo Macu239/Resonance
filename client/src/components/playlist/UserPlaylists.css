@@ -37,3 +37,33 @@ section{
     height: auto;
     filter: invert(1);
 }
+.user-playlists{
+    padding-left: 1rem;
+}
+.user-playlists .list{
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
+    align-items: start;
+}
+.user-playlists .list .text{
+    margin-left: 1rem;
+
+    display: flex; 
+    flex-direction: column;
+    gap: .25rem; 
+}
+.user-playlists .list .text h3{
+    color: white;
+    font-size: medium;
+}
+.user-playlists .list .text p{
+    color: grey;
+    font-size: .75rem;
+}
+.user-playlists img{
+    filter: none; 
+    width: 4rem; 
+    height: auto; 
+    border-radius: 8px;
+}

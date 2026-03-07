@@ -10,18 +10,17 @@ function Item({ title, desc, cover }) {
   return (
     <div className="item">
       <img src={cover} alt={title} />
-      <h3>{title}</h3>
-      <p>{desc}</p>
+      <div className="text">
+        <h3>{title}</h3>
+        <p>{desc}</p>
+      </div>
     </div>
   );
 }
 
 export default function UserPlaylists() {
 
-  const [items, setItems] = useState([
-    { id: 1, title: "Item One", desc: "", cover: "" },
-    { id: 2, title: "Item Two", desc: "", cover: "" },
-  ]);
+  const [items, setItems] = useState([]);
 
   const [showForm, setShowForm] = useState(false);
 

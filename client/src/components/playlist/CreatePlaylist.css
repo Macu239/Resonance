@@ -17,3 +17,17 @@ img{
     height: 1.5rem;
     filter: invert(1);
 }
+@keyframes rotateOpen {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(45deg); }
+}
+@keyframes rotateClose {
+  from { transform: rotate(45deg); }
+  to   { transform: rotate(0deg); }
+}
+.toggle-btn img {
+  animation: rotateClose 0.3s ease forwards;  /* default state */
+}
+.rotated {
+  animation: rotateOpen 0.3s ease forwards;   /* active state */
+}
