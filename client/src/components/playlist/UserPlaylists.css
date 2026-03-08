@@ -39,12 +39,16 @@ section{
 }
 .user-playlists{
     padding-left: 1rem;
+
+    height: 100%;
+    overflow-y: auto;
 }
 .user-playlists .list{
     display: flex; 
     flex-direction: column; 
     gap: 1rem; 
     align-items: start;
+
 }
 .user-playlists .list .text{
     margin-left: 1rem;
