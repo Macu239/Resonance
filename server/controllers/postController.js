@@ -1,18 +1,30 @@
-const Post = require("wi26-hack-team-2\server\models\Post.js");
+const Post = require("../models/Post.js");
 
 exports.createPost = async (req, res) => {
   try {
-    const { content} = req.body;
+    const { Content } = req.body;
 
-    if (!content || !req.user) {
+    if (!Content || !req.user) {
       return res
         .status(400)
         .json({ message: "Content and postedBy are required" });
     }
 
     const post = await Post.create({
-      content,
+      Content,
       postedBy: req.user?.id,
+      createdAt: new Date(),
+      attachments: {
+        image: "",
+        playlist: "",
+        album: "",
+        singleMusic: "",
+        artist: "",
+      },
+      likes: 0,
+      comments: [],
+      reposts: 0,
+      shares: 0,
     });
 
     res.status(201).json(post);
