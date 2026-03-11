@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const cors = require('cors');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -18,6 +19,10 @@ connectDB();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+
+//cors middleware
+app.use(cors()); // allows all origins
 
 app.use(logger('dev'));
 app.use(express.json());
