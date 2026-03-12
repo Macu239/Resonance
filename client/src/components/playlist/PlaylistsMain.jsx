@@ -1,7 +1,7 @@
 import "./PlaylistsMain.css";
 import Widgets from "./Widgets.jsx"
 import UserPlaylists from "./UserPlaylists.jsx"
-
+import RecPlaylists from "./RecPlaylists";
 
 export default function PlaylistsMain() {
   /*
@@ -27,9 +27,7 @@ export default function PlaylistsMain() {
           -Shuffle Setting
           -Repeat Setting
   */
-
   return (
-
 
     <div className="grid-main-wrapper">
       <div className="grid-main">
@@ -42,7 +40,7 @@ export default function PlaylistsMain() {
         </section>
 
         <section className="rec-container">
-          Rec
+          <RecPlaylists/>
         </section>
 
         <section className="currsong-container">

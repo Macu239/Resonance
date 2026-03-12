@@ -22,15 +22,14 @@
 
 .item img {
   width: 24px;
-  height: 24px;
-  object-fit: contain;
+  height: auto;
   filter: invert(1);
 }
 
 .item a:hover {
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
-#widgets_optbtn {
+#widgets_homebtn {
     margin-top: 1.5rem;
 }

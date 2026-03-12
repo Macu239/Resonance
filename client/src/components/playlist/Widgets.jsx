@@ -5,15 +5,6 @@ export default function Widgets() {
 
   return (
     <ul className="navbar">
-       <li>
-        <div className="item" id="widgets_optbtn">
-          <a id="widgets_item_optbtn" href="">
-            <img
-              src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772735485/xmark-solid_lpgcww.png"
-              alt="x" />
-          </a>
-        </div>
-      </li>
       <li>
         <div className="item" id="widgets_homebtn">
           <a id="widgets_item_homebtn" href="/">
@@ -38,6 +29,15 @@ export default function Widgets() {
             <img
               src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
               alt="search" />
+          </a>
+        </div>
+      </li>
+      <li>
+        <div className="item" id="widgets_optbtn">
+          <a id="widgets_item_optbtn" href="">
+            <img
+              src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1773273058/compact-disc-solid_cetkwq.png"
+              alt="queue" />
           </a>
         </div>
       </li>

@@ -6,7 +6,8 @@ import CreatePlaylist from "./CreatePlaylist";
 import AddPlaylistForm from "./AddPlaylistForm"
 import { useState } from "react";
 
-function Item({ title, desc, cover }) {
+
+function Playlist({ title, desc, cover }) {
   return (
     <div className="item">
       <img src={cover} alt={title} />
@@ -26,7 +27,7 @@ export default function UserPlaylists() {
 
   const handleAdd = (title) => {
     const newItem = {
-      id: items.length + 1,
+      id: crypto.randomUUID(),
       title: title,
       desc: "user",
       cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
@@ -60,7 +61,7 @@ export default function UserPlaylists() {
       <section className="user-playlists" id="userlists_playlists">
         <div className="list">
           {items.map((item) => (
-            <Item key={item.id} {...item} />
+            <Playlist key={item.id} {...item} />
           ))}
 
           {/* Form component — only renders when showForm is true */}
