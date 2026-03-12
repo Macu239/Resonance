@@ -22,8 +22,12 @@ function Playlist({ title, desc, cover }) {
 export default function UserPlaylists() {
 
   const [items, setItems] = useState([]);
+  const [specLists, setSpecLists] = useState([]);
 
   const [showForm, setShowForm] = useState(false);
+  const [showSpecLists, setShowSpecLists] = useState(false);
+
+  const displayList = showSpecLists ? specLists : items;
 
   const handleAdd = (title) => {
     const newItem = {
@@ -34,6 +38,17 @@ export default function UserPlaylists() {
     };
     setItems([...items, newItem]);
     setShowForm(false);  // hides form after adding
+  };
+
+  const handleSpecAdd = (search) => {
+    if (search == "") { setShowSpecLists(false); return; }
+    {
+      const filtered = items.filter((item) =>
+        item.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setSpecLists(filtered);
+      setShowSpecLists(true);
+    }
   };
 
   return (
@@ -54,13 +69,13 @@ export default function UserPlaylists() {
             src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
             alt="search" />
 
-          <UP_Search />
+          <UP_Search onSearch={handleSpecAdd} />
         </div>
       </section>
 
       <section className="user-playlists" id="userlists_playlists">
         <div className="list">
-          {items.map((item) => (
+          {displayList.map((item) => (
             <Playlist key={item.id} {...item} />
           ))}
 

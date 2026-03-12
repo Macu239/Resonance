@@ -39,6 +39,10 @@ export default function PlaylistsMain() {
           <UserPlaylists/>
         </section>
 
+        {/* <section className="misc-container">
+          Test
+        </section> */}
+
         <section className="rec-container">
           <RecPlaylists/>
         </section>

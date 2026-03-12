@@ -1,4 +1,3 @@
-
 .grid-main-wrapper {
     background-color: hsl(240, 6%, 7%);
 
@@ -9,7 +8,7 @@
     height: 100vh;
 }
 
-.grid-main{
+.grid-main {
     width: min(100vw, calc(100vh * (14 / 9)));
     height: min(100vh, calc(100vw * (9 / 14)));
 
@@ -24,13 +23,11 @@
         "currsong currsong currsong";
 }
 
-.grid-main > section {
+.grid-main>section {
     background-color: #1e1f25;
     border-radius: 10px;
     box-shadow: 10px 10px 5px black;
 }
-
-.grid-main > 
 
 .widgets-container {
     display: flex;
@@ -46,7 +43,7 @@
     background-color: hsl(240, 94%, 13%);
     color: lightgreen;
 
-    display: flex; 
+    display: flex;
     flex-direction: column;
     align-items: center;
     padding: .5rem;
@@ -56,11 +53,26 @@
     grid-area: playlists;
 }
 
+/* .misc-container {
+    background-color: hsl(49, 74%, 10%);
+    color: darkgrey;
+    grid-area: misc;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
+    height: 100%;
+
+    overflow: hidden;
+
+} */
+
 .rec-container {
     background-color: hsl(261, 65%, 15%);
     color: antiquewhite;
 
-    display: flex; 
+    display: flex;
     flex-direction: column;
     align-items: center;
     padding: .5rem;

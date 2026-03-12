@@ -41,6 +41,7 @@
     gap: 0.5rem;
     align-items: center;
     flex-shrink: 0;
+    border-radius: 8px;
 }
 
 .auto-playlists img {
@@ -48,6 +49,10 @@
     width: 8rem;
     height: auto;
     border-radius: 8px;
+}
+
+.auto-playlists .list .item:hover{
+    background-color: hsla(0, 0%, 100%, 0.1);
 }
 
 .auto-playlists .list .item p {
