@@ -24,6 +24,7 @@ export default function Home() {
       [name]: value,
     }));
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>

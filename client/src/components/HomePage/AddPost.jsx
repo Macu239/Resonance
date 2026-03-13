@@ -3,19 +3,24 @@ import "./AddPost.css";
 
 export default function AddPost() {
   const [postDraftData, setPostDraftData] = useState({
-    Content: "",
+    content: "",
+    createdAt: new Date(),
     attachments: {
-      image: null,
-      playlist: null,
-      album: null,
-      music: null,
-      artist: null,
+      image: "",
+      playlist: "",
+      album: "",
+      singleMusic: "",
+      artist: "",
     },
+    likes: 0,
+    comments: [],
+    reposts: 0,
+    shares: 0,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setpostDraftData((prev) => ({
+    setPostDraftData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -34,7 +39,7 @@ export default function AddPost() {
           name="Content"
           placeholder="What are you listening?"
           className="addPostInput"
-          value={postDraftData.Content}
+          value={postDraftData.content}
           onChange={handleChange}
         />
         <div className="addPostActions">
@@ -96,13 +101,19 @@ export default function AddPost() {
           </div>
           <button
             className="addPostPostBtn"
-            onClick={() => {
+            onClick={async () => {
               console.log("post that!", postDraftData.Content);
 
-              setpostDraftData((prev) => ({
-                ...prev,
-                Content: "",
-              }));
+              const respond = await fetch("/post", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  content: postDraftData.content,
+
+                }),
+              });
             }}
           >
             Post it

@@ -3,9 +3,7 @@
 import "./UserPlaylists.css"
 import UP_Search from "./UP_Search";
 import CreatePlaylist from "./CreatePlaylist";
-import AddPlaylistForm from "./AddPlaylistForm"
 import { useState } from "react";
-
 
 function Playlist({ title, desc, cover }) {
   return (
@@ -19,46 +17,32 @@ function Playlist({ title, desc, cover }) {
   );
 }
 
-export default function UserPlaylists() {
+export default function UserPlaylists({ items, showForm, onToggle, onAdd }) {
 
-  const [items, setItems] = useState([]);
   const [specLists, setSpecLists] = useState([]);
-
-  const [showForm, setShowForm] = useState(false);
   const [showSpecLists, setShowSpecLists] = useState(false);
 
   const displayList = showSpecLists ? specLists : items;
 
-  const handleAdd = (title) => {
-    const newItem = {
-      id: crypto.randomUUID(),
-      title: title,
-      desc: "user",
-      cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
-    };
-    setItems([...items, newItem]);
-    setShowForm(false);  // hides form after adding
-  };
-
   const handleSpecAdd = (search) => {
-    if (search == "") { setShowSpecLists(false); return; }
-    {
-      const filtered = items.filter((item) =>
-        item.title.toLowerCase().includes(search.toLowerCase())
-      );
-      setSpecLists(filtered);
-      setShowSpecLists(true);
+    if (search === "") {
+      setShowSpecLists(false);
+      setSpecLists([]);
+      return;
     }
+    const filtered = items.filter((item) =>
+      item.title.toLowerCase().includes(search.toLowerCase())
+    );
+    setSpecLists(filtered);
+    setShowSpecLists(true);
   };
 
   return (
     <>
       <section className="header">
-        <h3 className="title">
-          Playlists
-        </h3>
+        <h3 className="title">Playlists</h3>
         <CreatePlaylist
-          onToggle={() => setShowForm(!showForm)}
+          onToggle={onToggle}
           showForm={showForm}
         />
       </section>
@@ -68,7 +52,6 @@ export default function UserPlaylists() {
           <img
             src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
             alt="search" />
-
           <UP_Search onSearch={handleSpecAdd} />
         </div>
       </section>
@@ -78,9 +61,6 @@ export default function UserPlaylists() {
           {displayList.map((item) => (
             <Playlist key={item.id} {...item} />
           ))}
-
-          {/* Form component — only renders when showForm is true */}
-          {showForm && <AddPlaylistForm onAdd={handleAdd} />}
         </div>
       </section>
     </>
