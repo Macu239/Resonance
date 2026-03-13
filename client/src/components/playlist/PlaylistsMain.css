@@ -1,7 +1,5 @@
-
 .grid-main-wrapper {
     background-color: hsl(240, 6%, 7%);
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,48 +12,104 @@
     height: min(100vh, calc(100vw * (9 / 14)));
 
     font-size: 10px;
-    gap: 1rem;
-    padding: 3rem;
+    padding: 2rem;
     display: grid;
-    grid-template-columns: auto 25fr 75fr;
-    grid-template-rows: 90fr 10fr;
+    grid-template-rows: 87.5fr 12.5fr;
     grid-template-areas:
-        "widgets playlists rec"
-        "currsong currsong currsong";
+        "widgets playlists drag-1 rec drag-2 misc"
+        "widgets drag-v    drag-v drag-v drag-v drag-v"
+        "widgets currsong  currsong currsong currsong currsong";
 }
 
-.grid-main > section {
-    background-color: #1e1f25;
+.grid-main>section {
+    background-color: #222224;
     border-radius: 10px;
-    box-shadow: 8px 8px 10px black;
+    box-shadow: 10px 10px 5px black;
+}
+
+/* --- Drag Handle --- */
+.drag-handle {
+    width: 6px;
+    cursor: col-resize;
+    background: transparent;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+    z-index: 10;
+    align-self: stretch;
+}
+
+.drag-handle:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.drag-handle.dragging {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* --- Vertical Drag Handle --- */
+.drag-handle-vertical {
+    height: 6px;
+    cursor: row-resize;
+    background: transparent;
+    border-radius: 999px;
+    transition: background 0.2s ease;
+    z-index: 10;
+    justify-self: stretch;
+    align-self: stretch;
+    /* ✅ remove any grid-column: 1 / -1 if you have it — 
+       let gridTemplateAreas handle placement instead */
+}
+
+.drag-handle-vertical:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.drag-handle-vertical.dragging {
+    background: rgba(255, 255, 255, 0.4);
 }
 
 .widgets-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    width: fit-content;
     padding: .5rem;
-
     grid-area: widgets;
+    height: 100%;
 }
 
 .playlists-container {
     background-color: hsl(240, 94%, 13%);
     color: lightgreen;
-
-    display: flex; 
+    display: flex;
     flex-direction: column;
     align-items: center;
     padding: .5rem;
-
+    height: 100%;
+    overflow: hidden;
     grid-area: playlists;
+}
+
+.misc-container {
+    background-color: hsl(49, 74%, 10%);
+    color: darkgrey;
+    grid-area: misc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
+    height: 100%;
+    overflow: hidden;
 }
 
 .rec-container {
     background-color: hsl(261, 65%, 15%);
     color: antiquewhite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
+    height: 100%;
+    overflow: hidden;
     grid-area: rec;
 }
 
@@ -63,4 +117,5 @@
     background-color: hsl(49, 74%, 10%);
     color: darkgrey;
     grid-area: currsong;
+    grid-column: 1 / -1;
 }

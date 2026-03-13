@@ -8,7 +8,7 @@ export default function AddPlaylistForm({ onAdd }) {
 
   const handleAdd = () => {
     if (title.trim() === "") return;
-    onAdd(title);  // this sends the title back up to the parent
+    onAdd(title); 
     setTitle("");
   };
 

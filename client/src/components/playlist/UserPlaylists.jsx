@@ -6,7 +6,8 @@ import CreatePlaylist from "./CreatePlaylist";
 import AddPlaylistForm from "./AddPlaylistForm"
 import { useState } from "react";
 
-function Item({ title, desc, cover }) {
+
+function Playlist({ title, desc, cover }) {
   return (
     <div className="item">
       <img src={cover} alt={title} />
@@ -21,18 +22,33 @@ function Item({ title, desc, cover }) {
 export default function UserPlaylists() {
 
   const [items, setItems] = useState([]);
+  const [specLists, setSpecLists] = useState([]);
 
   const [showForm, setShowForm] = useState(false);
+  const [showSpecLists, setShowSpecLists] = useState(false);
+
+  const displayList = showSpecLists ? specLists : items;
 
   const handleAdd = (title) => {
     const newItem = {
-      id: items.length + 1,
+      id: crypto.randomUUID(),
       title: title,
       desc: "user",
       cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
     };
     setItems([...items, newItem]);
     setShowForm(false);  // hides form after adding
+  };
+
+  const handleSpecAdd = (search) => {
+    if (search == "") { setShowSpecLists(false); return; }
+    {
+      const filtered = items.filter((item) =>
+        item.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setSpecLists(filtered);
+      setShowSpecLists(true);
+    }
   };
 
   return (
@@ -53,14 +69,14 @@ export default function UserPlaylists() {
             src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
             alt="search" />
 
-          <UP_Search />
+          <UP_Search onSearch={handleSpecAdd} />
         </div>
       </section>
 
       <section className="user-playlists" id="userlists_playlists">
         <div className="list">
-          {items.map((item) => (
-            <Item key={item.id} {...item} />
+          {displayList.map((item) => (
+            <Playlist key={item.id} {...item} />
           ))}
 
           {/* Form component — only renders when showForm is true */}

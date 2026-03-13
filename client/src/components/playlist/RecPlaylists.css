@@ -1,0 +1,76 @@
+.allRecPlaylists{
+    padding: 0rem;
+    width: 100%;
+    height: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    overflow-y: auto;
+}
+
+.auto-playlists {
+    padding: 1rem;
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+    width: 100%;
+    height: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    overflow-y: auto;
+}
+
+.auto-playlists .title{
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.auto-playlists .list {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.auto-playlists .list .item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 8px;
+}
+
+.auto-playlists img {
+    filter: none;
+    width: 8rem;
+    height: auto;
+    border-radius: 8px;
+}
+
+.auto-playlists .list .item p {
+    color: grey;
+    font-size: 0.8rem;
+    margin: 0;
+    text-align: start;
+    width: 6rem;
+     /* replace white-space: nowrap, overflow: hidden, text-overflow: ellipsis with: */
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;          
+}
+
+.auto-playlists .list .item h3{
+    font-size: 1rem;
+    margin: 0;
+    text-align: center;
+    width: 6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
