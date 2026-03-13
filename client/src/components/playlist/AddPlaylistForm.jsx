@@ -18,6 +18,10 @@ export default function AddPlaylistForm({ onAdd }) {
         placeholder="Enter title..."
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') handleAdd(); 
+          if (e.key === 'Escape') setTitle(""); 
+        }}
       />
       <button onClick={handleAdd}>Create</button>
     </div>

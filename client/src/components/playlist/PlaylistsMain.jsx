@@ -5,16 +5,22 @@ import "./PlaylistsMain.css";
 import Widgets from "./Widgets.jsx"
 import UserPlaylists from "./UserPlaylists.jsx"
 import RecPlaylists from "./RecPlaylists";
+import RP_PlaylistInfo from "./RP_PlaylistInfo";
+import AddPlaylistForm from "./AddPlaylistForm";
 
 const WIDGETS_WIDTH = 5;
 const MIN_PLAYLISTS = 20;
 const MIN_REC = 30;
 const MIN_MISC = 20;
 const MIN_MAIN = 80;
-const MIN_CURRSONG = 8;
+const MIN_CURRSONG = 12.5;
 const TOTAL_FR = 100;
 
 export default function PlaylistsMain() {
+
+  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [items, setItems] = useState([]);
 
   const [colWidths, setColWidths] = useState({
     playlists: 25,
@@ -29,6 +35,36 @@ export default function PlaylistsMain() {
 
   const gridRef = useRef(null);
   const draggingRef = useRef(null);
+
+  const handleToggleForm = () => {
+    setShowForm(!showForm);
+    setSelectedPlaylist(null);
+  };
+
+  const handlePlaylistCreated = (title) => {  
+    const newItem = {
+      id: crypto.randomUUID(),
+      title: title,
+      desc: "user",
+      cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
+    };
+    setItems([...items, newItem]);
+    setShowForm(false);
+    setSelectedPlaylist(null);
+  };
+
+  const renderMiscContent = () => {
+    if (showForm) return (
+      <AddPlaylistForm onAdd={(title) => handlePlaylistCreated(title)} />
+    );
+    if (selectedPlaylist) return (
+      <RP_PlaylistInfo
+        playlist={selectedPlaylist}
+        onClose={() => setSelectedPlaylist(null)}
+      />
+    );
+    return <p>Select a playlist or create a new one</p>;
+  };
 
   const startDragHorizontal = useCallback((e, handle) => {
     e.preventDefault();
@@ -165,7 +201,12 @@ export default function PlaylistsMain() {
         <div style={{ gridArea: 'gap' }} />
 
         <section className="playlists-container">
-          <UserPlaylists />
+          <UserPlaylists
+            items={items}
+            showForm={showForm}
+            onToggle={handleToggleForm}
+            onAdd={handlePlaylistCreated}
+          />
         </section>
 
         <div
@@ -175,7 +216,7 @@ export default function PlaylistsMain() {
         />
 
         <section className="rec-container">
-          <RecPlaylists />
+          <RecPlaylists onSelectPlaylist={setSelectedPlaylist} />
         </section>
 
         <div
@@ -185,7 +226,7 @@ export default function PlaylistsMain() {
         />
 
         <section className="misc-container">
-          Test
+          {renderMiscContent()}
         </section>
 
         <div

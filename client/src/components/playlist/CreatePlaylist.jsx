@@ -7,8 +7,9 @@ export default function CreatePlaylist({ onToggle, showForm }) {
         <button onClick={onToggle}>
             <img
                 src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772667370/plus-solid-nobg_oxsd4x.png"
-                alt="Add" 
-                className={showForm ? "rotated" : ""}/>
+                alt="Add"
+                className={showForm ? "rotated" : ""}
+            />
         </button>
     )
 }
