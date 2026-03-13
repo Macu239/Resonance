@@ -4,9 +4,6 @@ import './CreatePlaylist.css'
 
 export default function CreatePlaylist({ onToggle, showForm }) {
     return (
-        //     <button onClick={onToggle}>
-        //   {showForm ? "Cancel" : "+ Add Item"}
-        // </button>
         <button onClick={onToggle}>
             <img
                 src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772667370/plus-solid-nobg_oxsd4x.png"

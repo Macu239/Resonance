@@ -162,7 +162,6 @@ export default function PlaylistsMain() {
           <Widgets />
         </section>
 
-        {/* ✅ gap spacer between widgets and playlists */}
         <div style={{ gridArea: 'gap' }} />
 
         <section className="playlists-container">
