@@ -1,6 +1,6 @@
 "use client"
 
-import "./UserPlaylists.css"
+import "./Styles/UserPlaylists.css"
 import UP_Search from "./UP_Search";
 import CreatePlaylist from "./CreatePlaylist";
 import { useState } from "react";

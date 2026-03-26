@@ -1,0 +1,16 @@
+h2 {
+    margin-top: 1.25rem;
+    margin-bottom: .75rem;
+    font-size: 1.25rem;
+    color: white;
+}
+input {
+    margin-bottom: .5rem;
+}
+h3 {
+    font-size: .8rem;
+}
+.finish-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}

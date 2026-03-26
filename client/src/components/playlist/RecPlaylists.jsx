@@ -1,6 +1,6 @@
 "use client"
 
-import './RecPlaylists.css'
+import './Styles/RecPlaylists.css'
 import { useState } from 'react';
 
 function Playlist({ title, desc, cover, songs, onSelect }) {
@@ -59,7 +59,7 @@ export default function RecPlaylists({ onSelectPlaylist }) {
               <Playlist
                 key={playlist.id}
                 {...playlist}
-                onSelect={() => onSelectPlaylist({  // ✅ sends selected playlist up to PlaylistsMain
+                onSelect={() => onSelectPlaylist({ 
                   ...playlist,
                   categoryId: category.id
                 })}

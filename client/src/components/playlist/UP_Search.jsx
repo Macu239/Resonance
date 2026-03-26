@@ -1,6 +1,6 @@
 "use client"
 
-import './UP_Search.css';
+import './Styles/UP_Search.css';
 import { useState } from 'react';
 
 export default function UP_Search({ onSearch }) {
