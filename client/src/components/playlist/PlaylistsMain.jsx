@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import "./Styles/PlaylistsMain.css";
 import Widgets from "./Widgets.jsx"
 import UserPlaylists from "./UserPlaylists.jsx"
@@ -10,51 +10,21 @@ import AddPlaylistForm from "./AddPlaylistForm";
 import CurrSong from "./CurrSong";
 import SongQueue from "./SongQueue";
 
-// ── Default song list — replace with MongoDB data later ──────────────────────
-const SONG_LIST = [
-  {
-    id: "1",
-    title: "Song Title One",
-    artist: "Artist Name",
-    album: "Album One",
-    cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
-    duration: "3:45",
-    url: "https://res.cloudinary.com/da2m1qmvl/video/upload/Djo_-_End_Of_Beginning_Official_Audio_phukoa.mp3",
-  },
-  {
-    id: "2",
-    title: "Song Title Two",
-    artist: "Artist Name",
-    album: "Album Two",
-    cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
-    duration: "4:12",
-    url: "https://res.cloudinary.com/da2m1qmvl/video/upload/Radiohead_-_Weird_Fishes_-_by_Tobias_Stretch_trnmu6.mp3",
-  },
-  {
-    id: "3",
-    title: "Song Title Three",
-    artist: "Artist Name",
-    album: "Album Three",
-    cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
-    duration: "2:58",
-    url: "https://res.cloudinary.com/da2m1qmvl/video/upload/v1774562735/Like_Him_yihzt1.mp3",
-  },
-];
-
-const WIDGETS_WIDTH  = 5;
-const MIN_PLAYLISTS  = 20;
-const MIN_REC        = 30;
-const MIN_MISC       = 20;
-const MIN_MAIN       = 80;
-const MIN_CURRSONG   = 12.5;
-const TOTAL_FR       = 100;
+const WIDGETS_WIDTH = 5;
+const MIN_PLAYLISTS = 20;
+const MIN_REC = 30;
+const MIN_MISC = 20;
+const MIN_MAIN = 80;
+const MIN_CURRSONG = 12.5;
+const TOTAL_FR = 100;
 
 export default function PlaylistsMain() {
 
   // ── Shared audio state ─────────────────────────────────────────────────────
-  // Lifted here so both CurrSong and SongQueue stay in sync
+  const [songList,   setSongList]   = useState([]);       // ✅ moved inside component
   const [trackIndex, setTrackIndex] = useState(0);
-  const [songList]                  = useState(SONG_LIST);
+  const [isLoading,  setIsLoading]  = useState(true);
+  const [fetchError, setFetchError] = useState(null);
 
   // ── Misc panel state ───────────────────────────────────────────────────────
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
@@ -76,6 +46,31 @@ export default function PlaylistsMain() {
   const gridRef     = useRef(null);
   const draggingRef = useRef(null);
 
+  // ✅ useEffect must live inside the component
+  useEffect(() => {
+
+    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL); // ✅ add this
+    
+    const fetchSongs = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/songs`
+        );
+        if (!res.ok) throw new Error("Failed to fetch songs");
+
+        const data = await res.json();
+        setSongList(data.songs);
+      } catch (err) {
+        console.error("Song fetch error:", err);
+        setFetchError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSongs();
+  }, []);
+
   // ── Form toggle ────────────────────────────────────────────────────────────
   const handleToggleForm = () => {
     setShowForm(!showForm);
@@ -96,7 +91,6 @@ export default function PlaylistsMain() {
   };
 
   // ── Misc content switcher ──────────────────────────────────────────────────
-  // Priority: form > playlist detail > queue (default)
   const renderMiscContent = () => {
     if (showForm) return (
       <AddPlaylistForm
@@ -110,7 +104,6 @@ export default function PlaylistsMain() {
         onClose={() => setSelectedPlaylist(null)}
       />
     );
-    // ✅ Default: show the song queue
     return (
       <SongQueue
         songList={songList}
@@ -170,7 +163,7 @@ export default function PlaylistsMain() {
   // ── Vertical drag ──────────────────────────────────────────────────────────
   const startDragVertical = useCallback((e) => {
     e.preventDefault();
-    const startY      = e.clientY;
+    const startY       = e.clientY;
     const startHeights = { ...rowHeights };
 
     const onMove = (moveEvent) => {
@@ -211,6 +204,19 @@ export default function PlaylistsMain() {
     6px
     ${rowHeights.currsong}fr
   `;
+
+  // ✅ loading and error states inside the component return
+  if (isLoading) return (
+    <div className="grid-main-wrapper">
+      <p style={{ color: "antiquewhite", padding: "2rem" }}>Loading...</p>
+    </div>
+  );
+
+  if (fetchError) return (
+    <div className="grid-main-wrapper">
+      <p style={{ color: "red", padding: "2rem" }}>Error: {fetchError}</p>
+    </div>
+  );
 
   return (
     <div className="grid-main-wrapper">
@@ -258,7 +264,6 @@ export default function PlaylistsMain() {
           onMouseDown={(e) => startDragHorizontal(e, 'drag-2')}
         />
 
-        {/* ✅ misc — queue by default, form or playlist detail when active */}
         <section className="misc-container">
           {renderMiscContent()}
         </section>
@@ -269,7 +274,6 @@ export default function PlaylistsMain() {
           onMouseDown={startDragVertical}
         />
 
-        {/* ✅ CurrSong receives shared trackIndex + setter */}
         <section className="currsong-container">
           <CurrSong
             songList={songList}
