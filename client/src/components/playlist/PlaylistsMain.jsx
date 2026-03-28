@@ -12,24 +12,24 @@ import SongQueue from "./SongQueue";
 
 const WIDGETS_WIDTH = 5;
 const MIN_PLAYLISTS = 20;
-const MIN_REC = 30;
-const MIN_MISC = 20;
-const MIN_MAIN = 80;
-const MIN_CURRSONG = 12.5;
-const TOTAL_FR = 100;
+const MIN_REC       = 30;
+const MIN_MISC      = 20;
+const MIN_MAIN      = 80;
+const MIN_CURRSONG  = 12.5;
+const TOTAL_FR      = 100;
 
 export default function PlaylistsMain() {
 
   // ── Shared audio state ─────────────────────────────────────────────────────
-  const [songList,   setSongList]   = useState([]);       // ✅ moved inside component
+  const [songList,   setSongList]   = useState([]);
   const [trackIndex, setTrackIndex] = useState(0);
   const [isLoading,  setIsLoading]  = useState(true);
   const [fetchError, setFetchError] = useState(null);
 
   // ── Misc panel state ───────────────────────────────────────────────────────
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
-  const [showForm,         setShowForm]         = useState(false);
-  const [items,            setItems]            = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [items, setItems] = useState([]);
 
   // ── Grid resize state ──────────────────────────────────────────────────────
   const [colWidths, setColWidths] = useState({
@@ -46,22 +46,17 @@ export default function PlaylistsMain() {
   const gridRef     = useRef(null);
   const draggingRef = useRef(null);
 
-  // ✅ useEffect must live inside the component
+  // ── Fetch songs from MongoDB ───────────────────────────────────────────────
   useEffect(() => {
-
-    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL); // ✅ add this
-    
     const fetchSongs = async () => {
+      const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/songs`
-        );
+        const res = await fetch(`${baseURL}/api/songs`);
         if (!res.ok) throw new Error("Failed to fetch songs");
-
         const data = await res.json();
         setSongList(data.songs);
       } catch (err) {
-        console.error("Song fetch error:", err);
+        console.error("Song fetch error:", err.message);
         setFetchError(err.message);
       } finally {
         setIsLoading(false);
@@ -77,12 +72,12 @@ export default function PlaylistsMain() {
     setSelectedPlaylist(null);
   };
 
-  // ── Playlist created ───────────────────────────────────────────────────────
+  // ── Playlist created — local only, no MongoDB ──────────────────────────────
   const handlePlaylistCreated = (title) => {
     const newItem = {
-      id: crypto.randomUUID(),
+      id:    crypto.randomUUID(),
       title: title,
-      desc: "user",
+      desc:  "user",
       cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
     };
     setItems([...items, newItem]);
@@ -118,7 +113,7 @@ export default function PlaylistsMain() {
     e.preventDefault();
     draggingRef.current = {
       handle,
-      startX: e.clientX,
+      startX:      e.clientX,
       startWidths: { ...colWidths },
     };
 
@@ -153,11 +148,11 @@ export default function PlaylistsMain() {
     const onUp = () => {
       draggingRef.current = null;
       window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('mouseup',   onUp);
     };
 
     window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
+    window.addEventListener('mouseup',   onUp);
   }, [colWidths]);
 
   // ── Vertical drag ──────────────────────────────────────────────────────────
@@ -181,31 +176,25 @@ export default function PlaylistsMain() {
 
     const onUp = () => {
       window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('mouseup',   onUp);
     };
 
     window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
+    window.addEventListener('mouseup',   onUp);
   }, [rowHeights]);
 
   // ── Grid template strings ──────────────────────────────────────────────────
   const gridTemplateColumns = `
-    ${WIDGETS_WIDTH}fr
-    1rem
-    ${colWidths.playlists}fr
-    6px
-    ${colWidths.rec}fr
-    6px
+    ${WIDGETS_WIDTH}fr 1rem
+    ${colWidths.playlists}fr 6px
+    ${colWidths.rec}fr 6px
     ${colWidths.misc}fr
   `;
 
   const gridTemplateRows = `
-    ${rowHeights.main}fr
-    6px
-    ${rowHeights.currsong}fr
+    ${rowHeights.main}fr 6px ${rowHeights.currsong}fr
   `;
 
-  // ✅ loading and error states inside the component return
   if (isLoading) return (
     <div className="grid-main-wrapper">
       <p style={{ color: "antiquewhite", padding: "2rem" }}>Loading...</p>

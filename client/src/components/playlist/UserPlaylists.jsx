@@ -6,6 +6,7 @@ import CreatePlaylist from "./CreatePlaylist";
 import { useState } from "react";
 
 function Playlist({ title, desc, cover }) {
+  // ✅ removed: id and onDelete props
   return (
     <div className="item">
       <img src={cover} alt={title} />
@@ -13,13 +14,15 @@ function Playlist({ title, desc, cover }) {
         <h3>{title}</h3>
         <p>{desc}</p>
       </div>
+      {/* ✅ removed: delete button */}
     </div>
   );
 }
 
 export default function UserPlaylists({ items, showForm, onToggle, onAdd }) {
+  // ✅ removed: onDelete prop
 
-  const [specLists, setSpecLists] = useState([]);
+  const [specLists,     setSpecLists]     = useState([]);
   const [showSpecLists, setShowSpecLists] = useState(false);
 
   const displayList = showSpecLists ? specLists : items;
@@ -51,7 +54,8 @@ export default function UserPlaylists({ items, showForm, onToggle, onAdd }) {
         <div>
           <img
             src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
-            alt="search" />
+            alt="search"
+          />
           <UP_Search onSearch={handleSpecAdd} />
         </div>
       </section>
@@ -60,9 +64,10 @@ export default function UserPlaylists({ items, showForm, onToggle, onAdd }) {
         <div className="list">
           {displayList.map((item) => (
             <Playlist key={item.id} {...item} />
+            // ✅ removed: onDelete={onDelete}
           ))}
         </div>
       </section>
     </>
-  )
+  );
 }
