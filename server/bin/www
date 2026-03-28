@@ -4,7 +4,17 @@
  * Module dependencies.
  */
 
-require('dotenv').config();
+// .server/bin/www
+const path = require("path");
+const fs   = require("fs");
+
+// ✅ load the first .env file that exists
+const envFiles = [".env.local", ".env.development.local", ".env.development", ".env"];
+const envPath  = envFiles
+    .map((f) => path.resolve(__dirname, "..", f))
+    .find((f) => fs.existsSync(f));
+
+if (envPath) require("dotenv").config({ path: envPath });
 var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');

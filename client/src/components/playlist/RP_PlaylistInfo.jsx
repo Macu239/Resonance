@@ -1,5 +1,7 @@
 "use client"
 
+import "./Styles/RP_PlaylistInfo.css"
+
 export default function RP_PlaylistInfo({ playlist, onClose, onAddSong, onRemoveSong }) {
   return (
     <div className='playlist-detail'>

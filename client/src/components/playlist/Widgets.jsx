@@ -1,11 +1,14 @@
 import { useState } from "react";
-import "./Widgets.css"
-import widgetsData from "./data/widgetsData.json";
+import "./Styles/Widgets.css"
+import playlistData from "./data/playlistData.json";
+
+const { iconsData } = playlistData.widgetsData;
+const { itemClass, navClass } = playlistData.widgetsData.iconsClasses; 
 
 function IconItem({ link, src, alt, boxID }) {
   return (
     <li>
-      <div className="item" id={boxID}>
+      <div className={itemClass} id={boxID}>
         <a href={link}>
           <img
             src={src}
@@ -28,7 +31,7 @@ const generateIcon = (link, src, alt, boxID) => {
 
 export default function Widgets() {
   const [icons] = useState(
-    widgetsData.map((icon) => generateIcon(
+    iconsData.map((icon) => generateIcon(
       icon.link,
       icon.src,
       icon.alt,
@@ -37,7 +40,7 @@ export default function Widgets() {
   );
 
   return (
-    <ul className="navbar">
+    <ul className={navClass}>
       {icons.map((icon) => (
         <IconItem key={icon.id} {...icon} />
       ))}
