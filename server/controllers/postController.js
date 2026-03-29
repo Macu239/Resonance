@@ -2,24 +2,24 @@ const Post = require("../models/Post.js");
 
 exports.createPost = async (req, res) => {
   try {
-    const { Content } = req.body;
+    const { content } = req.body;
 
-    if (!Content || !req.user) {
+    if (!content /*!req.user*/) {
       return res
         .status(400)
         .json({ message: "Content and postedBy are required" });
     }
 
     const post = await Post.create({
-      Content,
-      postedBy: req.user?.id,
+      content,
+      postedBy: req.user?.id || "testing",
       createdAt: new Date(),
       attachments: {
-        image: "",
-        playlist: "",
-        album: "",
-        singleMusic: "",
-        artist: "",
+        image: null,
+        playlist: null,
+        album: null,
+        singleMusic: null,
+        artist: null,
       },
       likes: 0,
       comments: [],
@@ -35,11 +35,38 @@ exports.createPost = async (req, res) => {
 
 exports.getPosts = async (req, res) => {
   try {
-    const posts = await Post.find()
-      .populate("postedBy", "username")
-      .sort({ createdAt: -1 });
+    const posts = await Post.find().sort({ createdAt: -1 }); //await Post.find().populate("postedBy", "username").sort({ createdAt: -1 }
 
     res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.likePost = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { likes: 1 } },
+      { new: true },
+    );
+
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.sharePost = async (req, res) => {
+  console.log("SHARE HIT");
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { shares: 1 } },
+      { new: true },
+    );
+
+    res.json(post);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
