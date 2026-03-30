@@ -1,0 +1,305 @@
+/* ============================================================
+   CurrSong.css
+   All layout and order of controls is editable here.
+   Key sections are labelled with comments.
+   ============================================================ */
+
+/* ── Root layout: three zones side by side ──────────────────
+   Change justify-content or flex-direction to reorganize
+   the overall player layout.
+   ─────────────────────────────────────────────────────────── */
+.currsong {
+  display: flex;
+  flex-direction: row;
+  /* change to column to stack vertically */
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  background: transparent;
+  gap: 1rem;
+  color: antiquewhite;
+}
+
+/* ── Left zone: cover + song info + like button ─────────────
+   Change order property to reposition this zone.
+   ─────────────────────────────────────────────────────────── */
+.cs-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 0 0 auto;
+  min-width: 0;
+  order: 1;
+  /* change order to reposition zone */
+}
+
+.cs-cover {
+  filter: none;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.cs-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cs-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10rem;
+  color: antiquewhite;
+}
+
+.cs-artist {
+  font-size: 0.72rem;
+  color: rgba(255, 235, 205, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10rem;
+}
+
+/* ── Center zone: playback controls + seek bar ──────────────
+   Change order property to reposition this zone.
+   ─────────────────────────────────────────────────────────── */
+.cs-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1 1 auto;
+  order: 2;
+  /* change order to reposition zone */
+}
+
+/* ── Controls row ────────────────────────────────────────────
+   Reorder children by changing their individual order values.
+   ─────────────────────────────────────────────────────────── */
+.cs-controls {
+  display: flex;
+  flex-direction: row;
+  /* change to row-reverse to flip order */
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Individual control order — edit these to rearrange buttons */
+.cs-shuffle {
+  order: 1;
+}
+
+/* shuffle button */
+.cs-prev {
+  order: 2;
+}
+
+/* previous track */
+.cs-playpause {
+  order: 3;
+}
+
+/* play / pause   */
+.cs-next {
+  order: 4;
+}
+
+/* next track     */
+.cs-repeat {
+  order: 5;
+}
+
+/* repeat button  */
+
+/* ── Seek bar row ────────────────────────────────────────────
+   Contains: current time — seek slider — total duration
+   ─────────────────────────────────────────────────────────── */
+.cs-seek-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.cs-time {
+  font-size: 0.68rem;
+  color: rgba(255, 235, 205, 0.55);
+  flex-shrink: 0;
+  min-width: 2.2rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Right zone: volume control ─────────────────────────────
+   Change order property to reposition this zone.
+   ─────────────────────────────────────────────────────────── */
+.cs-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+  order: 3;
+  /* change order to reposition zone */
+}
+
+/* ── Icon buttons (shared base style) ───────────────────────
+   All control buttons share this base. Override individually
+   using .cs-shuffle, .cs-playpause etc.
+   ─────────────────────────────────────────────────────────── */
+.cs-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 235, 205, 0.7);
+  transition: color 0.15s ease, transform 0.1s ease, background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.cs-icon-btn:hover {
+  color: antiquewhite;
+  background: rgba(255, 255, 255, 0.08);
+  transform: scale(1.1);
+}
+
+.cs-icon-btn:active {
+  transform: scale(0.95);
+}
+
+/* Active state for shuffle, repeat, like */
+.cs-icon-btn.cs-active {
+  color: hsl(141, 73%, 58%);
+  /* spotify-style green — change to any color */
+}
+
+.cs-icon-btn.cs-active:hover {
+  color: hsl(141, 73%, 70%);
+}
+
+/* SVG sizes per button — edit to resize individually */
+.cs-shuffle svg,
+.cs-repeat svg,
+.cs-like svg,
+.cs-mute svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.cs-prev svg,
+.cs-next svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.cs-playpause {
+  width: 2.2rem;
+  height: 2.2rem;
+  background: antiquewhite;
+  color: #1e1f25;
+  border-radius: 50%;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.cs-playpause:hover {
+  background: white;
+  color: #1e1f25;
+  transform: scale(1.08);
+}
+
+.cs-playpause svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+/* ── Range input shared base ─────────────────────────────────
+   Both seek and volume use this. The --pct CSS variable is set
+   inline by the component to show the filled portion.
+   ─────────────────────────────────────────────────────────── */
+.cs-slider-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.cs-vol-wrap {
+  width: 5.5rem;
+  flex: 0 0 5.5rem;
+}
+
+input[type="range"].cs-seek,
+input[type="range"].cs-volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(to right,
+      antiquewhite var(--pct, 0%),
+      rgba(255, 235, 205, 0.2) var(--pct, 0%));
+  transition: background 0.05s;
+}
+
+input[type="range"].cs-seek:hover,
+input[type="range"].cs-volume:hover {
+  background: linear-gradient(to right,
+      hsl(141, 73%, 58%) var(--pct, 0%),
+      rgba(255, 235, 205, 0.2) var(--pct, 0%));
+}
+
+/* Thumb styles — webkit */
+input[type="range"].cs-seek::-webkit-slider-thumb,
+input[type="range"].cs-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: antiquewhite;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+input[type="range"].cs-seek:hover::-webkit-slider-thumb,
+input[type="range"].cs-volume:hover::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+/* Thumb styles — firefox */
+input[type="range"].cs-seek::-moz-range-thumb,
+input[type="range"].cs-volume::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: antiquewhite;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+input[type="range"].cs-seek:hover::-moz-range-thumb,
+input[type="range"].cs-volume:hover::-moz-range-thumb {
+  opacity: 1;
+}

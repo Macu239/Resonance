@@ -1,12 +1,12 @@
 "use client"
 
-import "./UserPlaylists.css"
+import "./Styles/UserPlaylists.css"
 import UP_Search from "./UP_Search";
 import CreatePlaylist from "./CreatePlaylist";
-import AddPlaylistForm from "./AddPlaylistForm"
 import { useState } from "react";
 
-function Item({ title, desc, cover }) {
+function Playlist({ title, desc, cover }) {
+  // ✅ removed: id and onDelete props
   return (
     <div className="item">
       <img src={cover} alt={title} />
@@ -14,35 +14,38 @@ function Item({ title, desc, cover }) {
         <h3>{title}</h3>
         <p>{desc}</p>
       </div>
+      {/* ✅ removed: delete button */}
     </div>
   );
 }
 
-export default function UserPlaylists() {
+export default function UserPlaylists({ items, showForm, onToggle, onAdd }) {
+  // ✅ removed: onDelete prop
 
-  const [items, setItems] = useState([]);
+  const [specLists,     setSpecLists]     = useState([]);
+  const [showSpecLists, setShowSpecLists] = useState(false);
 
-  const [showForm, setShowForm] = useState(false);
+  const displayList = showSpecLists ? specLists : items;
 
-  const handleAdd = (title) => {
-    const newItem = {
-      id: items.length + 1,
-      title: title,
-      desc: "user",
-      cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
-    };
-    setItems([...items, newItem]);
-    setShowForm(false);  // hides form after adding
+  const handleSpecAdd = (search) => {
+    if (search === "") {
+      setShowSpecLists(false);
+      setSpecLists([]);
+      return;
+    }
+    const filtered = items.filter((item) =>
+      item.title.toLowerCase().includes(search.toLowerCase())
+    );
+    setSpecLists(filtered);
+    setShowSpecLists(true);
   };
 
   return (
     <>
       <section className="header">
-        <h3 className="title">
-          Playlists
-        </h3>
+        <h3 className="title">Playlists</h3>
         <CreatePlaylist
-          onToggle={() => setShowForm(!showForm)}
+          onToggle={onToggle}
           showForm={showForm}
         />
       </section>
@@ -51,22 +54,20 @@ export default function UserPlaylists() {
         <div>
           <img
             src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772662690/magnifying-glass-solid-full-nobg_m7ovpq.png"
-            alt="search" />
-
-          <UP_Search />
+            alt="search"
+          />
+          <UP_Search onSearch={handleSpecAdd} />
         </div>
       </section>
 
       <section className="user-playlists" id="userlists_playlists">
         <div className="list">
-          {items.map((item) => (
-            <Item key={item.id} {...item} />
+          {displayList.map((item) => (
+            <Playlist key={item.id} {...item} />
+            // ✅ removed: onDelete={onDelete}
           ))}
-
-          {/* Form component — only renders when showForm is true */}
-          {showForm && <AddPlaylistForm onAdd={handleAdd} />}
         </div>
       </section>
     </>
-  )
+  );
 }

@@ -1,55 +1,276 @@
-import "./PlaylistsMain.css";
+"use client"
+
+import { useState, useEffect, useRef, useCallback } from "react";
+import "./Styles/PlaylistsMain.css";
 import Widgets from "./Widgets.jsx"
 import UserPlaylists from "./UserPlaylists.jsx"
+import RecPlaylists from "./RecPlaylists";
+import RP_PlaylistInfo from "./RP_PlaylistInfo";
+import AddPlaylistForm from "./AddPlaylistForm";
+import CurrSong from "./CurrSong";
+import SongQueue from "./SongQueue";
 
+const WIDGETS_WIDTH = 5;
+const MIN_PLAYLISTS = 20;
+const MIN_REC       = 30;
+const MIN_MISC      = 20;
+const MIN_MAIN      = 80;
+const MIN_CURRSONG  = 12.5;
+const TOTAL_FR      = 100;
 
 export default function PlaylistsMain() {
-  /*
-  -List of Components
-      -Widget Selections
-          -Add (pages, other general selections?)
-          -Home Page Router
-          -Search Playlist (sep page?)
-          -Messages Page Router (or integrated)
-      -Personal Playlists 
-          -Create New Playlist
-          -Search Playlists List
-          -Playlist Display List
-              -Playlist Item
-      -Rec Playlists
-          -Rec Playlists List
-          -Genre Playlists List
-          -Other...
-      -Current Song/Playlist Bar
-          -Play/Pause
-          -Skip
-          -Go Back 
-          -Shuffle Setting
-          -Repeat Setting
-  */
+
+  // ── Shared audio state ─────────────────────────────────────────────────────
+  const [songList,   setSongList]   = useState([]);
+  const [trackIndex, setTrackIndex] = useState(0);
+  const [isLoading,  setIsLoading]  = useState(true);
+  const [fetchError, setFetchError] = useState(null);
+
+  // ── Misc panel state ───────────────────────────────────────────────────────
+  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [items, setItems] = useState([]);
+
+  // ── Grid resize state ──────────────────────────────────────────────────────
+  const [colWidths, setColWidths] = useState({
+    playlists: 25,
+    rec: 50,
+    misc: 20,
+  });
+
+  const [rowHeights, setRowHeights] = useState({
+    main: 87.5,
+    currsong: 12.5,
+  });
+
+  const gridRef     = useRef(null);
+  const draggingRef = useRef(null);
+
+  // ── Fetch songs from MongoDB ───────────────────────────────────────────────
+  useEffect(() => {
+    const fetchSongs = async () => {
+      const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+      try {
+        const res = await fetch(`${baseURL}/api/songs`);
+        if (!res.ok) throw new Error("Failed to fetch songs");
+        const data = await res.json();
+        setSongList(data.songs);
+      } catch (err) {
+        console.error("Song fetch error:", err.message);
+        setFetchError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSongs();
+  }, []);
+
+  // ── Form toggle ────────────────────────────────────────────────────────────
+  const handleToggleForm = () => {
+    setShowForm(!showForm);
+    setSelectedPlaylist(null);
+  };
+
+  // ── Playlist created — local only, no MongoDB ──────────────────────────────
+  const handlePlaylistCreated = (title) => {
+    const newItem = {
+      id:    crypto.randomUUID(),
+      title: title,
+      desc:  "user",
+      cover: "https://res.cloudinary.com/da2m1qmvl/image/upload/v1772921353/daftpunkcover_dgdhnt.jpg",
+    };
+    setItems([...items, newItem]);
+    setShowForm(false);
+    setSelectedPlaylist(null);
+  };
+
+  // ── Misc content switcher ──────────────────────────────────────────────────
+  const renderMiscContent = () => {
+    if (showForm) return (
+      <AddPlaylistForm
+        onAdd={(title) => handlePlaylistCreated(title)}
+        onToggle={handleToggleForm}
+      />
+    );
+    if (selectedPlaylist) return (
+      <RP_PlaylistInfo
+        playlist={selectedPlaylist}
+        onClose={() => setSelectedPlaylist(null)}
+      />
+    );
+    return (
+      <SongQueue
+        songList={songList}
+        trackIndex={trackIndex}
+        onSelect={(index) => setTrackIndex(index)}
+      />
+    );
+  };
+
+  // ── Horizontal drag ────────────────────────────────────────────────────────
+  const startDragHorizontal = useCallback((e, handle) => {
+    e.preventDefault();
+    draggingRef.current = {
+      handle,
+      startX:      e.clientX,
+      startWidths: { ...colWidths },
+    };
+
+    const onMove = (moveEvent) => {
+      if (!draggingRef.current) return;
+      const gridWidth = gridRef.current.offsetWidth;
+      const deltaX    = moveEvent.clientX - draggingRef.current.startX;
+      const deltaFR   = (deltaX / gridWidth) * TOTAL_FR;
+      let newWidths   = { ...draggingRef.current.startWidths };
+
+      if (handle === 'drag-1') {
+        let newPlaylists = newWidths.playlists + deltaFR;
+        let newRec       = newWidths.rec - deltaFR;
+        if (newPlaylists < MIN_PLAYLISTS) { newRec += newPlaylists - MIN_PLAYLISTS; newPlaylists = MIN_PLAYLISTS; }
+        if (newRec < MIN_REC)             { newPlaylists += newRec - MIN_REC;       newRec = MIN_REC; }
+        newWidths.playlists = newPlaylists;
+        newWidths.rec       = newRec;
+      }
+
+      if (handle === 'drag-2') {
+        let newRec  = newWidths.rec + deltaFR;
+        let newMisc = newWidths.misc - deltaFR;
+        if (newRec < MIN_REC)   { newMisc += newRec - MIN_REC;   newRec = MIN_REC; }
+        if (newMisc < MIN_MISC) { newRec += newMisc - MIN_MISC;  newMisc = MIN_MISC; }
+        newWidths.rec  = newRec;
+        newWidths.misc = newMisc;
+      }
+
+      setColWidths(newWidths);
+    };
+
+    const onUp = () => {
+      draggingRef.current = null;
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup',   onUp);
+    };
+
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup',   onUp);
+  }, [colWidths]);
+
+  // ── Vertical drag ──────────────────────────────────────────────────────────
+  const startDragVertical = useCallback((e) => {
+    e.preventDefault();
+    const startY       = e.clientY;
+    const startHeights = { ...rowHeights };
+
+    const onMove = (moveEvent) => {
+      const gridHeight = gridRef.current.offsetHeight;
+      const deltaY     = moveEvent.clientY - startY;
+      const deltaFR    = (deltaY / gridHeight) * 100;
+      let newMain      = startHeights.main + deltaFR;
+      let newCurrsong  = startHeights.currsong - deltaFR;
+
+      if (newMain < MIN_MAIN)         { newCurrsong += newMain - MIN_MAIN;         newMain = MIN_MAIN; }
+      if (newCurrsong < MIN_CURRSONG) { newMain += newCurrsong - MIN_CURRSONG;     newCurrsong = MIN_CURRSONG; }
+
+      setRowHeights({ main: newMain, currsong: newCurrsong });
+    };
+
+    const onUp = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup',   onUp);
+    };
+
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup',   onUp);
+  }, [rowHeights]);
+
+  // ── Grid template strings ──────────────────────────────────────────────────
+  const gridTemplateColumns = `
+    ${WIDGETS_WIDTH}fr 1rem
+    ${colWidths.playlists}fr 6px
+    ${colWidths.rec}fr 6px
+    ${colWidths.misc}fr
+  `;
+
+  const gridTemplateRows = `
+    ${rowHeights.main}fr 6px ${rowHeights.currsong}fr
+  `;
+
+  if (isLoading) return (
+    <div className="grid-main-wrapper">
+      <p style={{ color: "antiquewhite", padding: "2rem" }}>Loading...</p>
+    </div>
+  );
+
+  if (fetchError) return (
+    <div className="grid-main-wrapper">
+      <p style={{ color: "red", padding: "2rem" }}>Error: {fetchError}</p>
+    </div>
+  );
 
   return (
-
-
     <div className="grid-main-wrapper">
-      <div className="grid-main">
+      <div
+        className="grid-main"
+        ref={gridRef}
+        style={{
+          gridTemplateColumns,
+          gridTemplateRows,
+          gridTemplateAreas: `
+            "widgets gap playlists drag-1 rec drag-2 misc"
+            "drag-v drag-v drag-v drag-v drag-v drag-v drag-v"
+            "currsong currsong currsong currsong currsong currsong currsong"
+          `
+        }}
+      >
         <section className="widgets-container">
-          <Widgets/>
+          <Widgets />
         </section>
+
+        <div style={{ gridArea: 'gap' }} />
 
         <section className="playlists-container">
-          <UserPlaylists/>
+          <UserPlaylists
+            items={items}
+            showForm={showForm}
+            onToggle={handleToggleForm}
+            onAdd={handlePlaylistCreated}
+          />
         </section>
+
+        <div
+          className="drag-handle"
+          style={{ gridArea: 'drag-1' }}
+          onMouseDown={(e) => startDragHorizontal(e, 'drag-1')}
+        />
 
         <section className="rec-container">
-          Rec
+          <RecPlaylists onSelectPlaylist={setSelectedPlaylist} />
         </section>
+
+        <div
+          className="drag-handle"
+          style={{ gridArea: 'drag-2' }}
+          onMouseDown={(e) => startDragHorizontal(e, 'drag-2')}
+        />
+
+        <section className="misc-container">
+          {renderMiscContent()}
+        </section>
+
+        <div
+          className="drag-handle-vertical"
+          style={{ gridArea: 'drag-v' }}
+          onMouseDown={startDragVertical}
+        />
 
         <section className="currsong-container">
-          Curr Song
+          <CurrSong
+            songList={songList}
+            trackIndex={trackIndex}
+            onTrackChange={setTrackIndex}
+          />
         </section>
-
       </div>
     </div>
-  )
+  );
 }

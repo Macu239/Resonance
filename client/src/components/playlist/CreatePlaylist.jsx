@@ -1,17 +1,19 @@
 "use client"
 
-import './CreatePlaylist.css'
+import './Styles/CreatePlaylist.css'
+import playlistData from './data/playlistData.json'
 
 export default function CreatePlaylist({ onToggle, showForm }) {
+
+    const { imgSrc, imgAlt } = playlistData.crPlaylistData;
+
     return (
-        //     <button onClick={onToggle}>
-        //   {showForm ? "Cancel" : "+ Add Item"}
-        // </button>
         <button onClick={onToggle}>
             <img
-                src="https://res.cloudinary.com/da2m1qmvl/image/upload/v1772667370/plus-solid-nobg_oxsd4x.png"
-                alt="Add" 
-                className={showForm ? "rotated" : ""}/>
+                src={imgSrc}
+                alt={imgAlt}
+                className={showForm ? "rotated" : ""}
+            />
         </button>
     )
 }
