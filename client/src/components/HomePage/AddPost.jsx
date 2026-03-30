@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./AddPost.css";
 
-export default function AddPost() {
+export default function AddPost({ onPostCreated }) {
   const [postDraftData, setPostDraftData] = useState({
     content: "",
     createdAt: new Date(),
@@ -36,7 +36,7 @@ export default function AddPost() {
       <div className="addPostRight">
         <textarea
           type="text"
-          name="Content"
+          name="content"
           placeholder="What are you listening?"
           className="addPostInput"
           value={postDraftData.content}
@@ -102,18 +102,21 @@ export default function AddPost() {
           <button
             className="addPostPostBtn"
             onClick={async () => {
-              console.log("post that!", postDraftData.Content);
+              console.log("post that!", postDraftData.content);
 
-              const respond = await fetch("/post", {
+              const respond = await fetch("http://localhost:3001/post", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                   content: postDraftData.content,
-
                 }),
               });
+
+              if (onPostCreated) {
+                onPostCreated();
+              }
             }}
           >
             Post it

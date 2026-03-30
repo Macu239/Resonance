@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import {
   MusicPlayer,
   Menu,
@@ -8,7 +8,6 @@ import {
   ArtistsGrid,
   AddPost,
   Post,
-  PostData,
 } from "../components/HomePage";
 import styles from "./page.module.css";
 
@@ -24,6 +23,28 @@ export default function Home() {
       [name]: value,
     }));
   };
+  const [refresh, setRefresh] = useState(0);
+
+  const triggerRefresh = () => {
+    setRefresh((prev) => prev + 1);
+  };
+  const [postData, setPostsData] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/post");
+        const data = await response.json();
+        setPostsData(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchPosts();
+  }, [refresh]);
+
+  console.log("Posts data fetched:", postData);
 
   return (
     <div className={styles.container}>
@@ -48,11 +69,11 @@ export default function Home() {
         </div>
         <div className={styles.postArea}>
           <div className={`${styles.addPost} ${styles.subBlocks}`}>
-            <AddPost />
+            <AddPost onPostCreated = {triggerRefresh} />
           </div>
           <div className={`${styles.posts} ${styles.subBlocks}`}>
-            {PostData.map((post) => (
-              <Post key={post.userName} PostData={post} />
+            {postData.map((post) => (
+              <Post key={post._id} PostData={post}/>
             ))}
           </div>
         </div>
@@ -68,9 +89,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className={`${styles.messagesWindow} ${styles.subBlocks}`}>
+      {/* <div className={`${styles.messagesWindow} ${styles.subBlocks}`}>
         <Messages />
-      </div>
+      </div> */}
     </div>
   );
 }
