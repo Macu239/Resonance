@@ -18,7 +18,7 @@ export default function ArtistsGrid() {
           </div>
         ))}
       </div>
-      <div className="ArtistsSeeMore" onClick={console.log("see more clicked")}>See More</div>
+      <div className="ArtistsSeeMore" onClick={console.log("see more artist clicked")}>See More</div>
     </div>
   );
 }

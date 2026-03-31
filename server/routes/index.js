@@ -27,5 +27,7 @@ router.patch('/post/:id/likes', postController.likePost);
 
 router.patch('/post/:id/shares', postController.sharePost);
 
+router.post('/post/:id/comments', postController.createComment);
+
 
 module.exports = router;
