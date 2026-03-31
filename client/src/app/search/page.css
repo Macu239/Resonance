@@ -1,0 +1,30 @@
+text {
+    font-family: "Open Sans";
+}
+
+.songHeader {
+    font-size: 48px;
+    font-weight: bold;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    margin: 24px;
+}
+
+.contents {
+    width: 100%;
+    display: block;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.songGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    padding: 20px;
+}

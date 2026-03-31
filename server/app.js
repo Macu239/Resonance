@@ -24,6 +24,7 @@ var { connectDB } = require("./config/db");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var songsRouter = require("./routes/songs");
+var searchRouter = require("./routes/search");
 // ✅ removed: playlistsRouter
 
 var app = express();
@@ -52,6 +53,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/api/songs", songsRouter);
+app.use("/api/search", searchRouter);
 // ✅ removed: app.use("/api/playlists", playlistsRouter)
 
 app.use(function(req, res, next) {
@@ -59,7 +61,8 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-    res.locals.message = err.message;
+    res.locals.title = 'Error';
+    res.locals.message = err.message || "Error";
     res.locals.error   = req.app.get("env") === "development" ? err : {};
     res.status(err.status || 500);
     res.render("error");
