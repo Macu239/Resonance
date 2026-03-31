@@ -1,7 +1,7 @@
 import React from 'react';
 
 function UserPanel(props) {
-    const { name, message, time, isActive } = props;
+    const { name, message, time, isActive, image } = props;
 	return (
 		<button style = {{ 
 			display: 'flex',
@@ -19,13 +19,18 @@ function UserPanel(props) {
 			cursor: 'pointer',
 			overflow: 'hidden'
 		}}>
-			<div style = {{ 
-				width: '48px',
-				height: '48px',
-				backgroundColor: '#3D3D42',
-				borderRadius: '12px',
-				flexShrink: 0
-			}} />
+			<img 
+                src = {image || "/imgs/messages/avatars/default.png"} 
+                alt = {name}
+                style = {{ 
+                    width: '48px',
+                    height: '48px',
+                    backgroundColor: '#3D3D42',
+                    borderRadius: '12px',
+                    flexShrink: 0,
+                    objectFit: 'cover'
+                }} 
+            />
 			<div style = {{ 
 				flex: 1,
 				minWidth: 0,
