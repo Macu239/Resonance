@@ -49,14 +49,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <input
-          type="text"
-          name="Content"
-          placeholder="What do you want to play?"
-          className={styles.searchBar}
-          value={searchBar.Content}
-          onChange={handleChange}
-        />
+        <h2 className={styles.websiteTitle}>Resonance/Tweetify</h2>
       </div>
       <div className={styles.contents}>
         <div className={styles.leftMenu}>
