@@ -28,7 +28,7 @@ export default function MusicList() {
           </div>
         </div>
       ))}
-      <div className="musicListSeeMore" onClick={console.log("see more clicked")}>See More</div>
+      <div className="musicListSeeMore" onClick={console.log("see more music clicked")}>See More</div>
     </div>
   );
 }

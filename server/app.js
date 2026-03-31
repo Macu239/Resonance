@@ -40,7 +40,7 @@ app.set("view engine", "jade");
 
 app.use(cors({
     origin: "http://localhost:3000",
-    methods: ["GET", "POST", "DELETE"],
+    methods: ["GET", "POST", "DELETE","PATCH"],
     credentials: true
 }));
 

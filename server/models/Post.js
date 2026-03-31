@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
   content: { type: String, required: true },
+  profilePic: { type: String, default: null },
   postedBy: {
     type: String,
     required: true,
@@ -17,9 +18,11 @@ const postSchema = new mongoose.Schema({
   likes: { type: Number, default: 0 },
   comments: [
     {
-      userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-      comment: { type: String },
-      createdAt: { type: Date, default: Date.now },
+      userName:   { type: String, default: "Anonymous" }, // was: userId (ObjectId)
+      profilePic: { type: String, default: null },        // was: missing
+      text:       { type: String, required: true },       // was: comment
+      createdAt:  { type: Date,   default: Date.now },
+      likes:      { type: Number, default: 0 },
     },
   ],
   reposts: { type: Number, default: 0 }, // count of reshares
