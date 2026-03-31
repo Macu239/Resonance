@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
+import EmojiPicker from 'emoji-picker-react';
 
 import Sidebar from '../../components/messages/Sidebar'; 
 import UserPanel from '../../components/messages/UserPanel';
@@ -6,6 +8,68 @@ import ChatBubble from '../../components/messages/ChatBubble';
 
 function App() {
 
+    
+    const [activeUser, setActiveUser] = useState("Joey");
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+    const [chatHistories, setChatHistories] = useState({
+        "Joey": {
+        avatar: "/imgs/messages/avatars/joey.png",
+        messages: [{ text: "Hi! This is Joey.", isOutgoing: false, time: "15:25" }]
+        },
+        "Michelle": {
+            avatar: "/imgs/messages/avatars/michelle.png",
+            messages: [{ text: "Hi! This is Michelle.", isOutgoing: false, time: "15:39" }]
+        },
+        "Robbie": {
+            avatar: "/imgs/messages/avatars/robbie.png",
+            messages: [{ text: "Hi! This is Robbie.", isOutgoing: false, time: "16:01" }]
+        },
+        "Sunny": {
+            avatar: "/imgs/messages/avatars/Sunny.png",
+            messages: [{ text: "Hi! This is Sunny.", isOutgoing: false, time: "16:01" }]
+        },
+        "Ron": {
+            avatar: "/imgs/messages/avatars/ron.png",
+            messages: [{ text: "Hi! This is Ron.", isOutgoing: false, time: "16:01" }]
+        }
+    });
+    
+
+    const [inputValue, setInputValue] = useState("");
+
+    const handleSend = () => {
+        if (!inputValue.trim()) return;
+
+        const now = new Date();
+    const timeString = now.toLocaleTimeString('en-GB', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        hour12: false
+    });
+
+        const newMessage = { 
+            text: inputValue,
+            isOutgoing: true,
+            time: timeString
+        };
+
+        setChatHistories(prev => ({
+            ...prev,
+            [activeUser]: {
+                ...prev[activeUser],
+                messages: [...(prev[activeUser].messages || []), newMessage]
+            }
+        }));
+
+        setInputValue("");
+        setShowEmojiPicker(false)
+    };
+    
+    const onEmojiClick = (emojiData) => {
+        setInputValue((prev) => prev + emojiData.emoji);
+    };
+    
     return (
         <div style = {{ 
             display: 'flex', 
@@ -17,7 +81,8 @@ function App() {
         <Sidebar />
 
         {/* Middle: User Panel */}
-        <div style = {{ width: '350px', 
+        <div style = {{ 
+            width: '350px', 
             borderRight: '1px solid #2a2d33', 
             display: 'flex', 
             flexDirection: 'column' 
@@ -58,7 +123,7 @@ function App() {
                 </button>
             </div>
 
-            <div style={{
+            <div style = {{
                 margin: '10px 16px 10px 16px',
                 display: 'flex',
                 alignItems: 'center',
@@ -77,7 +142,7 @@ function App() {
                     justifyContent: 'center' 
                 }}>
                     <img 
-                    src="/imgs/messages/search.svg" 
+                    src = "/imgs/messages/search.svg" 
                     alt = "Search" 
                     style = {{
                         width: '14px',
@@ -88,7 +153,7 @@ function App() {
                 </span>
                 
                 <input 
-                    type="text" 
+                    type = "text" 
                     placeholder = "Search messages..." 
                     style = {{
                         background: 'transparent',
@@ -106,18 +171,33 @@ function App() {
             <div style = {{ 
                 overflowY: 'auto' 
             }}>
-            <UserPanel name = "Joey" message = "Example message here..." time = "11:12" />
-            <UserPanel name = "Michelle" message = "Example message here..." time = "8:34" />
-            <UserPanel name = "Robbie" message = "Example message here..." time = "4:10" />
-            <UserPanel name = "Sunny" message = "Example message here..." time = "Yesterday" />
-            <UserPanel name = "Ron" message = "Example message here..." time = "Yesterday" />
-            <UserPanel name = "Kayla" message = "Example message here..." time = "Monday" />
-            <UserPanel name = "Johnny" message = "Example message here..." time = "Sunday" />
-            <UserPanel name = "Belle" message = "Example message here..." time = "Sunday" />
-            <UserPanel name = "Margo" message = "Example message here..." time = "Saturday" />
-            <UserPanel name = "Tommy" message = "Example message here..." time = "Saturday" />
-            <UserPanel name = "Greg" message = "Example message here..." time = "Saturday" />
-            <UserPanel name = "Fred" message = "Example message here..." time = "Saturday" />
+                {Object.keys(chatHistories).map((name) => {
+                    const userData = chatHistories[name];
+                    const historyArray = userData.messages || [];
+                    const lastMsg = historyArray[historyArray.length - 1];
+
+                    return (
+                        <div 
+                            key = {name}
+                            onClick = {() => setActiveUser(name)}
+                            style = {{ 
+                                cursor: 'pointer',
+                                backgroundColor: activeUser === name ? '#2a2d33' : 'transparent',
+                                transition: '0.2s'
+                            }}
+                        >
+                            <UserPanel 
+                                name = {name} 
+                                image = {userData.avatar}
+                                message = {lastMsg?.text || "No messages yet"} 
+                                time = {lastMsg?.time || ""}
+                                isActive={activeUser === name}
+                            />
+
+                    </div>
+
+                );
+                })}
             </div>
         </div>
 
@@ -128,31 +208,35 @@ function App() {
             flexDirection: 'column' 
         }}>
             
-            {/* Chat Header */}
-                <div style = {{ 
-                    padding: '30px 20px 20px 20px', 
-                    color: '#fff', 
-                    borderBottom: '1px solid #2a2d33', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '15px' 
+        {/* Chat Header */}
+            <div style = {{ 
+                padding: '30px 20px 20px 20px', 
+                color: '#fff', 
+                borderBottom: '1px solid #2a2d33', 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '15px' 
             }}>
             
-            {/* User Icon */}
-                <div style = {{ 
+            <img 
+                src = {chatHistories[activeUser]?.avatar || "/imgs/default-avatar.png"} 
+                alt = {activeUser}
+                style = {{ 
                     height: '45px', 
                     width: '45px', 
-                    backgroundColor: '#3D3D42', 
-                    borderRadius: '12px' 
-                }}></div>
+                    borderRadius: '12px', 
+                    objectFit: 'cover' 
+            }} 
+            />
+
+            <span style = {{
+                fontWeight: 'bold',
+                fontSize: '18px'
+            }}>{activeUser}</span>
             
-            <span style = {{ 
-                fontWeight: 'bold', 
-                fontSize: '18px' 
-            }}>Full Name Here</span>
             </div>
 
-            {/* 1. The Scrollable Container */}
+            {/* Scrollable Container */}
             <div className = "no-scrollbar" style = {{ 
                 flex: 1, 
                 overflowY: 'auto', 
@@ -167,30 +251,34 @@ function App() {
                     display: 'flex', 
                     flexDirection: 'column'
                 }}>
-                    <ChatBubble text = "OLDEST MESSAGE" isOutgoing={false} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {false} />
-                    <ChatBubble text = "Text Here" isOutgoing = {false} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {false} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {false} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {false} />
-                    <ChatBubble text = "Text Here" isOutgoing = {true} />
-                    <ChatBubble text = "Text Here" isOutgoing = {false} />
-                    <ChatBubble text = "NEWEST MESSAGE" isOutgoing = {true} />
                     
-                
+                    {(chatHistories[activeUser]?.messages || []).map((msg, index) => (
+                        <ChatBubble 
+                            key = {index} 
+                            text = {msg.text} 
+                            isOutgoing = {msg.isOutgoing} 
+                        />
+                    ))}
+
                 </div>
             </div>
+
+            {/* Emoji Picker */}
+            {showEmojiPicker && (
+                <div style = {{ 
+                    position: 'absolute',
+                    bottom: '100px',
+                    right: '20px',
+                    zIndex: 10
+                }}>
+                    <EmojiPicker 
+                        theme = "dark" 
+                        onEmojiClick = {onEmojiClick}
+                        width = {300}
+                        height = {400}
+                    />
+                </div>
+            )}
 
             {/* Input Footer */}
             <div style = {{ 
@@ -208,6 +296,9 @@ function App() {
                 <input 
                 type = "text"
                 placeholder = "Message here" 
+                value = {inputValue}
+                onChange = {(e) => setInputValue(e.target.value)}
+                onKeyDown = {(e) => e.key === 'Enter' && handleSend()}
                 style = {{ 
                     flex: 1, 
                     fontSize: '18px',
@@ -218,50 +309,29 @@ function App() {
                 />
                 
                 {/* Emoji Button */}
-                <button style = {{ 
-                    cursor: 'pointer',
-                    fontSize: '18px',
-                    background: 'none',
-                    border: 'none',
-                    padding: '4px',
-                    alignItems: 'center',
-                    display: 'flex',
-                    marginRight: '4px',
-                    marginLeft: '4px'
-                }}>
+                <button
+                    onClick = {() => setShowEmojiPicker(!showEmojiPicker)}
+                    style = {{ 
+                        cursor: 'pointer',
+                        fontSize: '18px',
+                        background: 'none',
+                        border: 'none',
+                        padding: '4px',
+                        alignItems: 'center',
+                        display: 'flex',
+                        marginRight: '4px',
+                        marginLeft: '4px'
+                    }}>
                     <img 
-                    src="/imgs/messages/emoji.svg" 
-                    alt="Emoji" 
-                    style = {{
-                        width: '20px',
-                        height: '20px',
-                        filter: 'brightness(0) invert(1)'
-                    }}/>
+                        src = "/imgs/messages/emoji.svg" 
+                        alt = "Emoji" 
+                        style = {{
+                            width: '20px',
+                            height: '20px',
+                            filter: 'brightness(0) invert(1)'
+                        }}/>
                 </button>
 
-                {/* Picture Button */}
-                <button style = {{ 
-                    cursor: 'pointer',
-                    fontSize: '18px',
-                    background: 'none',
-                    border: 'none',
-                    padding: '4px',
-                    alignItems: 'center',
-                    display: 'flex',
-                    marginRight: '4px',
-                    marginLeft: '4px'
-                }}>
-                    <img 
-                    src="/imgs/messages/picture.svg" 
-                    alt="Picture" 
-                    style = {{
-                        width: '20px',
-                        height: '20px',
-                        filter: 'brightness(0) invert(1)'
-                    }}/>
-                </button>
-
-                
             </div>
             </div>
         </div>

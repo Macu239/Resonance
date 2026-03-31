@@ -1,13 +1,12 @@
-// .server/routes/songs.js
-const express       = require("express");
-const router        = express.Router();
+const express= require("express");
+const router= express.Router();
 const { connectDB } = require("../lib/mongodb");
 
 router.get("/", async (req, res) => {
     try {
-        const db    = await connectDB();
+        const db = await connectDB();
         const songs = await db
-            .collection("songs")  // ✅ lowercase — match Atlas exactly
+            .collection("songs")
             .find({})
             .toArray();
 
