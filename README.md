@@ -1,4 +1,4 @@
-# Resonance
+# Resonance <img src="image.png" alt="Resonance" width="50" />
 
 A full-stack social platform combining music streaming concepts with microblogging features. Built with the MERN stack (MongoDB, Express.js, React, Node.js), focusing on scalable architecture, clean API design, and production-level deployment practices.
 
