@@ -13,8 +13,6 @@ This project is developed as a system design and full-stack engineering practice
 - Frontend: React
 - Backend: Node.js, Express.js
 - Database: MongoDB
-- Authentication: JWT-based auth (planned / implemented depending on branch)
-- Deployment: Cloud deployment with CI/CD pipeline
 - External APIs: Spotify API (planned integration)
 
 ## Key Features
